@@ -3,6 +3,9 @@
 :root {
   --color-dark-blue: rgb(0, 151, 240);
   --color-grey: rgb(249, 249, 249);
+  --color-light-blue: rgba(0, 152, 240, 0.42);
+  --color-light-grey: rgba(68, 68, 68, 0.805);
+  --color-dark-grey: rgba(212, 209, 209, 0.398);
 }
 
 article {
@@ -35,19 +38,33 @@ article {
 .login-article form div {
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .login-article form label {
   font-size: 1.5rem;
-  color: rgb(176, 176, 176);
+  color: var(--color-light-grey);
+  cursor: text;
+  padding: 0 0.5rem;
+  cursor: text;
+  position: absolute;
+  top: 35%;
+  transition: all 100ms ease-in;
+}
+
+.login-article form label.move {
+  font-size: 1.2rem;
+  cursor: pointer;
+  transform: translateY(-52%);
 }
 
 .login-article form input {
-  height: 3rem;
+  height: 4rem;
   padding: 0 0.5rem;
   margin: 0.5rem 0;
-  background-color: rgba(185, 185, 185, 0.229);
+  background-color: var(--color-dark-grey);
   border: 0.05rem solid rgba(0, 0, 0, 0.192);
+  padding-top: 0.7rem;
 }
 
 .login-article button {
@@ -55,6 +72,13 @@ article {
   margin-top: 2rem;
   padding: 0.5rem 2rem;
   cursor: pointer;
+  background-color: var(--color-dark-blue);
+  border: none;
+  color: white;
+}
+
+.login-article button:disabled {
+  background-color: var(--color-light-blue);
 }
 
 .login-article footer {
@@ -66,4 +90,7 @@ article {
 .login-article footer a {
   text-decoration: none;
   color: var(--color-dark-blue);
+}
+
+.login-article form label {
 }
