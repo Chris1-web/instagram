@@ -5,7 +5,6 @@ function Form(props) {
         <h1>{props.header}</h1>
       </div>
       {props.children}
-      <footer>Don't have an account? Sign up</footer>
     </form>
   );
 }

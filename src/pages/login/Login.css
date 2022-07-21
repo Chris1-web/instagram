@@ -1,0 +1,69 @@
+@import url("https://fonts.googleapis.com/css2?family=Satisfy&display=swap");
+
+:root {
+  --color-dark-blue: rgb(0, 151, 240);
+  --color-grey: rgb(249, 249, 249);
+}
+
+article {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4rem;
+}
+
+article {
+  height: 100vh;
+  background-color: var(--color-grey);
+}
+
+.login-article form {
+  height: 40rem;
+  background-color: #fff;
+  border: 0.05rem solid rgba(0, 0, 0, 0.192);
+  padding: 1rem 4rem;
+  width: 26vw;
+}
+
+.login-article form h1 {
+  font-family: "Satisfy", cursive;
+  font-size: 4rem;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.login-article form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-article form label {
+  font-size: 1.5rem;
+  color: rgb(176, 176, 176);
+}
+
+.login-article form input {
+  height: 3rem;
+  padding: 0 0.5rem;
+  margin: 0.5rem 0;
+  background-color: rgba(185, 185, 185, 0.229);
+  border: 0.05rem solid rgba(0, 0, 0, 0.192);
+}
+
+.login-article button {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+}
+
+.login-article footer {
+  padding-top: 2rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.login-article footer a {
+  text-decoration: none;
+  color: var(--color-dark-blue);
+}
