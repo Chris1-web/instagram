@@ -1,0 +1,78 @@
+.signup-article form {
+  height: 50rem;
+  background-color: #fff;
+  border: 0.05rem solid rgba(0, 0, 0, 0.192);
+  padding: 0.5rem 4rem;
+  width: 26vw;
+}
+
+.signup-article form h1 {
+  font-family: "Satisfy", cursive;
+  font-size: 4rem;
+  text-align: center;
+  padding: 3rem 0;
+}
+
+.signup-article form div {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.signup-article form legend {
+  font-size: 1.5rem;
+  text-align: center;
+  color: var(--color-light-grey);
+  margin-bottom: 2rem;
+}
+
+.signup-article form label {
+  font-size: 1.5rem;
+  color: var(--color-light-grey);
+  cursor: text;
+  padding: 0 0.5rem;
+  cursor: text;
+  position: absolute;
+  top: 35%;
+  transition: all 100ms ease-in;
+}
+
+.signup-article form label.move {
+  font-size: 1.2rem;
+  cursor: pointer;
+  transform: translateY(-52%);
+}
+
+.signup-article form input {
+  height: 4rem;
+  padding: 0 0.5rem;
+  margin: 0.5rem 0;
+  background-color: var(--color-dark-grey);
+  border: 0.05rem solid rgba(0, 0, 0, 0.192);
+  padding-top: 0.7rem;
+}
+
+.signup-article button {
+  width: 100%;
+  margin-top: 2rem;
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+  background-color: var(--color-dark-blue);
+  border: none;
+  color: white;
+}
+
+.signup-article button:disabled {
+  background-color: var(--color-light-blue);
+}
+
+.signup-article footer {
+  padding-top: 2rem;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.signup-article footer a {
+  text-decoration: none;
+  color: var(--color-dark-blue);
+}
