@@ -20,10 +20,11 @@
 }
 
 .signup-article form legend {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   text-align: center;
   color: var(--color-light-grey);
   margin-bottom: 2rem;
+  font-weight: bolder;
 }
 
 .signup-article form label {
