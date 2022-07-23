@@ -7,6 +7,16 @@ import { Link } from "react-router-dom";
 import "./Signup.css";
 import { useEffect, useState } from "react";
 
+const checkValidity = function (input, successIcon, failureIcon) {
+  if (input.validity.valid) {
+    successIcon.classList.remove("hide");
+    failureIcon.classList.add("hide");
+  } else {
+    failureIcon.classList.remove("hide");
+    successIcon.classList.add("hide");
+  }
+};
+
 function Signup() {
   const [email, setEmail] = useState("");
   const [moveEmail, setMoveEmail] = useState(false);
@@ -19,20 +29,45 @@ function Signup() {
   const [buttonStatus, setButtonStatus] = useState(true);
 
   useEffect(() => {
+    // javascript validation API
     const emailInput = document.querySelector("#email");
+    const fullNameInput = document.querySelector("#full-name");
+    const usernameInput = document.querySelector("#username");
     const emailsuccessIcon = document.querySelector(".email-success-icon");
+    const fullNamesuccessIcon = document.querySelector(
+      ".fullName-success-icon"
+    );
+    const usernamesuccessIcon = document.querySelector(
+      ".username-success-icon"
+    );
     const emailfailureIcon = document.querySelector(".email-failure-icon");
-    const checkValidity = function () {
-      if (emailInput.validity.valid) {
-        emailsuccessIcon.classList.remove("hide");
-        emailfailureIcon.classList.add("hide");
-      } else {
-        emailfailureIcon.classList.remove("hide");
-        emailsuccessIcon.classList.add("hide");
-      }
+    const fullNamefailureIcon = document.querySelector(
+      ".fullName-failure-icon"
+    );
+    const usernamefailureIcon = document.querySelector(
+      ".username-failure-icon"
+    );
+    emailInput.addEventListener("input", () =>
+      checkValidity(emailInput, emailsuccessIcon, emailfailureIcon)
+    );
+    fullNameInput.addEventListener("input", () =>
+      checkValidity(fullNameInput, fullNamesuccessIcon, fullNamefailureIcon)
+    );
+    usernameInput.addEventListener("input", () =>
+      checkValidity(usernameInput, usernamesuccessIcon, usernamefailureIcon)
+    );
+    // unmounting
+    return () => {
+      emailInput.removeEventListener("input", () =>
+        checkValidity(emailInput, emailsuccessIcon, emailfailureIcon)
+      );
+      fullNameInput.removeEventListener("input", () =>
+        checkValidity(fullNameInput, fullNamesuccessIcon, fullNamefailureIcon)
+      );
+      usernameInput.removeEventListener("input", () =>
+        checkValidity(usernameInput, usernamesuccessIcon, usernamefailureIcon)
+      );
     };
-    emailInput.addEventListener("input", checkValidity);
-    return () => emailInput.removeEventListener("input", checkValidity);
   }, []);
 
   useEffect(() => {
@@ -114,7 +149,19 @@ function Signup() {
         </div>
         <div className="fullname-container">
           <label htmlFor="full-name" className={moveFullName ? "move" : ""}>
-            Full Name
+            <span>Full Name</span>
+            <span>
+              <img
+                className="fullName-success-icon hide"
+                src={checkmarkIcon}
+                alt="sucess"
+              />
+              <img
+                className="fullName-failure-icon hide"
+                src={cancelIcon}
+                alt="failure"
+              />
+            </span>
           </label>
           <input
             maxLength={30}
@@ -128,7 +175,19 @@ function Signup() {
         </div>
         <div className="username-container">
           <label htmlFor="username" className={moveUsername ? "move" : ""}>
-            Username
+            <span>Username</span>
+            <span>
+              <img
+                className="username-success-icon hide"
+                src={checkmarkIcon}
+                alt="sucess"
+              />
+              <img
+                className="username-failure-icon hide"
+                src={cancelIcon}
+                alt="failure"
+              />
+            </span>
           </label>
           <input
             maxLength={30}
@@ -142,7 +201,19 @@ function Signup() {
         </div>
         <div className="password-container">
           <label htmlFor="password" className={movePassword ? "move" : ""}>
-            Password
+            <span>Password</span>
+            <span>
+              <img
+                className="password-success-icon hide"
+                src={checkmarkIcon}
+                alt="sucess"
+              />
+              <img
+                className="password-failure-icon hide"
+                src={cancelIcon}
+                alt="failure"
+              />
+            </span>
           </label>
           <input
             type="password"
