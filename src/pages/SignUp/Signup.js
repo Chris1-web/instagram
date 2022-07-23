@@ -3,7 +3,7 @@ import Form from "../../components/Form";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
 import "./Signup.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Signup() {
   const [email, setEmail] = useState("");
@@ -15,6 +15,15 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [movePassword, setMovePassword] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(true);
+
+  useEffect(() => {
+    // if any input is empty disable button
+    if (email === "" || fullName === "" || username === "" || password === "") {
+      setButtonStatus(true);
+    } else {
+      setButtonStatus(false);
+    }
+  }, [email, fullName, username, password]);
 
   function handleEmail(e) {
     if (e.target.value === "") {
@@ -51,6 +60,7 @@ function Signup() {
 
   function createAccount() {
     console.log("welcome onboard");
+    console.log({ email, username, password, fullName });
   }
 
   return (
@@ -75,6 +85,7 @@ function Signup() {
             Full Name
           </label>
           <input
+            maxLength={30}
             type="text"
             name="full-name"
             id="full-name"
@@ -87,6 +98,7 @@ function Signup() {
             Username
           </label>
           <input
+            maxLength={30}
             type="text"
             name="username"
             id="username"
