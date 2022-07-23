@@ -28,6 +28,9 @@
 }
 
 .signup-article form label {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   font-size: 1.5rem;
   color: var(--color-light-grey);
   cursor: text;
@@ -44,6 +47,13 @@
   transform: translateY(-52%);
 }
 
+.signup-article form label img {
+  width: auto;
+  height: 1.8rem;
+  cursor: pointer;
+  transform: translateY(45%);
+}
+
 .signup-article form input {
   height: 4rem;
   padding: 0 0.5rem;
@@ -51,9 +61,6 @@
   background-color: var(--color-dark-grey);
   border: 0.05rem solid rgba(0, 0, 0, 0.192);
   padding-top: 0.7rem;
-}
-
-.signup-article form input.right {
 }
 
 .signup-article button {

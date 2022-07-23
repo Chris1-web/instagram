@@ -1,4 +1,6 @@
 import instragramAuthImage from "../../image/phone-instagram-screen.png";
+import checkmarkIcon from "../../image/checkmark-icon.png";
+import cancelIcon from "../../image/cancel-icon.png";
 import Form from "../../components/Form";
 import Button from "../../components/Button";
 import { Link } from "react-router-dom";
@@ -15,6 +17,23 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [movePassword, setMovePassword] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(true);
+
+  useEffect(() => {
+    const emailInput = document.querySelector("#email");
+    const emailsuccessIcon = document.querySelector(".email-success-icon");
+    const emailfailureIcon = document.querySelector(".email-failure-icon");
+    const checkValidity = function () {
+      if (emailInput.validity.valid) {
+        emailsuccessIcon.classList.remove("hide");
+        emailfailureIcon.classList.add("hide");
+      } else {
+        emailfailureIcon.classList.remove("hide");
+        emailsuccessIcon.classList.add("hide");
+      }
+    };
+    emailInput.addEventListener("input", checkValidity);
+    return () => emailInput.removeEventListener("input", checkValidity);
+  }, []);
 
   useEffect(() => {
     // if any input is empty disable button
@@ -70,7 +89,19 @@ function Signup() {
         <legend>Sign up to see photos and videos from your friends.</legend>
         <div className="email-container">
           <label htmlFor="email" className={moveEmail ? "move" : ""}>
-            Email address
+            <span>Email address</span>
+            <span>
+              <img
+                className="email-success-icon hide"
+                src={checkmarkIcon}
+                alt="sucess"
+              />
+              <img
+                className="email-failure-icon hide"
+                src={cancelIcon}
+                alt="failure"
+              />
+            </span>
           </label>
           <input
             type="email"
@@ -78,6 +109,7 @@ function Signup() {
             id="email"
             onChange={handleEmail}
             value={email}
+            required
           />
         </div>
         <div className="fullname-container">
@@ -91,6 +123,7 @@ function Signup() {
             id="full-name"
             value={fullName}
             onChange={handleFullName}
+            required
           />
         </div>
         <div className="username-container">
@@ -104,6 +137,7 @@ function Signup() {
             id="username"
             value={username}
             onChange={handleUsername}
+            required
           />
         </div>
         <div className="password-container">
@@ -116,6 +150,7 @@ function Signup() {
             id="password"
             value={password}
             onChange={handlePassword}
+            required
           />
         </div>
         <Button disabled={buttonStatus} title="Sign Up" />
