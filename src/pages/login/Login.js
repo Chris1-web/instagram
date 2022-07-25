@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import Button from "../../components/Button";
-import Form from "../../components/Form";
+import Button from "../../components/Button/Button.js";
+import Form from "../../components/Form/Form.js";
 import instragramAuthImage from "../../image/phone-instagram-screen.png";
 import "./Login.css";
 

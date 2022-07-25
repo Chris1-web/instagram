@@ -1,8 +1,8 @@
 import instragramAuthImage from "../../image/phone-instagram-screen.png";
 import checkmarkIcon from "../../image/checkmark-icon.png";
 import cancelIcon from "../../image/cancel-icon.png";
-import Form from "../../components/Form";
-import Button from "../../components/Button";
+import Form from "../../components/Form/Form.js";
+import Button from "../../components/Button/Button.js";
 import { Link } from "react-router-dom";
 import "./Signup.css";
 import { useEffect, useState } from "react";
@@ -28,6 +28,7 @@ function Signup() {
   const [movePassword, setMovePassword] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(true);
 
+  // javascript validation API
   useEffect(() => {
     // javascript validation API
     const emailInput = document.querySelector("#email");
@@ -115,6 +116,7 @@ function Signup() {
   function createAccount() {
     console.log("welcome onboard");
     console.log({ email, username, password, fullName });
+    // try to use firebase to create your account
   }
 
   return (
