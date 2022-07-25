@@ -113,7 +113,8 @@ function Signup() {
     setPassword(e.target.value);
   }
 
-  function createAccount() {
+  function createAccount(e) {
+    e.preventDefault();
     console.log("welcome onboard");
     console.log({ email, username, password, fullName });
     // try to use firebase to create your account
@@ -122,7 +123,7 @@ function Signup() {
   return (
     <article className="signup-article" onSubmit={createAccount}>
       <img src={instragramAuthImage} alt="instragram on a phone" />
-      <Form header="Instagram">
+      <Form header="Instagram" handleSubmit={createAccount}>
         <legend>Sign up to see photos and videos from your friends.</legend>
         <div className="email-container">
           <label htmlFor="email" className={moveEmail ? "move" : ""}>
