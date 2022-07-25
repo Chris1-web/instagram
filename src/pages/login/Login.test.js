@@ -22,7 +22,7 @@ describe("renders login pages", () => {
         <Login />
       </MemoryRouter>
     );
-    const emailInput = screen.getByRole("textbox", { name: "Email address" });
+    const emailInput = screen.getByRole("textbox", { name: /email address/i });
     userEvent.type(emailInput, "c@gmail.com");
     expect(emailInput.value).toBe("c@gmail.com");
   });
