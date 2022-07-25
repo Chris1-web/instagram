@@ -1,3 +1,12 @@
+:root {
+  --color-dark-blue: rgb(0, 151, 240);
+  --color-grey: rgb(249, 249, 249);
+  --color-light-blue: rgba(0, 152, 240, 0.42);
+  --color-light-grey: rgba(68, 68, 68, 0.805);
+  --color-dark-grey: rgba(212, 209, 209, 0.398);
+  --color-black: #000;
+}
+
 * {
   margin: 0;
   padding: 0;

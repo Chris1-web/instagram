@@ -27,6 +27,7 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [movePassword, setMovePassword] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(true);
+  const [showPassword, setShowPassword] = useState(true);
 
   // javascript validation API
   useEffect(() => {
@@ -34,6 +35,8 @@ function Signup() {
     const emailInput = document.querySelector("#email");
     const fullNameInput = document.querySelector("#full-name");
     const usernameInput = document.querySelector("#username");
+
+    // failure and success icons
     const emailsuccessIcon = document.querySelector(".email-success-icon");
     const fullNamesuccessIcon = document.querySelector(
       ".fullName-success-icon"
@@ -57,6 +60,7 @@ function Signup() {
     usernameInput.addEventListener("input", () =>
       checkValidity(usernameInput, usernamesuccessIcon, usernamefailureIcon)
     );
+
     // unmounting
     return () => {
       emailInput.removeEventListener("input", () =>
@@ -72,12 +76,18 @@ function Signup() {
   }, []);
 
   useEffect(() => {
+    // show password button in password input
+    const showPassword = document.querySelector(".show-password");
+
     // if any input is empty disable button
     if (email === "" || fullName === "" || username === "" || password === "") {
       setButtonStatus(true);
     } else {
       setButtonStatus(false);
     }
+
+    password !== "" && showPassword.classList.remove("hide");
+    password === "" && showPassword.classList.add("hide");
   }, [email, fullName, username, password]);
 
   function handleEmail(e) {
@@ -112,12 +122,15 @@ function Signup() {
     }
     setPassword(e.target.value);
   }
+  function toggleInputType() {
+    showPassword ? setShowPassword(false) : setShowPassword(true);
+  }
 
   function createAccount(e) {
     e.preventDefault();
     console.log("welcome onboard");
     console.log({ email, username, password, fullName });
-    // try to use firebase to create your account
+    // use firebase to create your account
   }
 
   return (
@@ -205,21 +218,12 @@ function Signup() {
         <div className="password-container">
           <label htmlFor="password" className={movePassword ? "move" : ""}>
             <span>Password</span>
-            <span>
-              <img
-                className="password-success-icon hide"
-                src={checkmarkIcon}
-                alt="sucess"
-              />
-              <img
-                className="password-failure-icon hide"
-                src={cancelIcon}
-                alt="failure"
-              />
+            <span className="show-password hide" onClick={toggleInputType}>
+              {showPassword ? "show" : "hide"}
             </span>
           </label>
           <input
-            type="password"
+            type={showPassword ? "password" : "text"}
             name="password"
             id="password"
             value={password}
