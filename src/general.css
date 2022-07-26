@@ -30,3 +30,9 @@ input {
 .hide {
   display: none;
 }
+
+.error-message {
+  color: red;
+  text-align: center;
+  font-size: 1.5rem;
+}

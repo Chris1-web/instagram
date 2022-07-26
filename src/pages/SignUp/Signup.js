@@ -88,6 +88,10 @@ function Signup() {
   }, []);
 
   useEffect(() => {
+    // auth.currentUser !== null && history("/");
+  }, []);
+
+  useEffect(() => {
     // show password button in password input
     const showPassword = document.querySelector(".show-password");
 
@@ -139,6 +143,7 @@ function Signup() {
   }
 
   async function createAccount(e) {
+    const errorMessage = document.querySelector(".error-message");
     e.preventDefault();
     try {
       // disabled button to prevent double attempt at account creation
@@ -160,6 +165,7 @@ function Signup() {
     } catch (error) {
       console.log(error.code);
       console.log(error.message);
+      errorMessage.textContent = error.message.slice(9);
     }
   }
 
@@ -265,6 +271,7 @@ function Signup() {
         <footer>
           Have an account? <Link to="/login">Log in</Link>
         </footer>
+        <p className="error-message"></p>
       </Form>
     </article>
   );
