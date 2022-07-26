@@ -6,6 +6,17 @@ import Button from "../../components/Button/Button.js";
 import { Link } from "react-router-dom";
 import "./Signup.css";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+// firebase
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../../Firebase/Firebase-init";
+
+//
 
 const checkValidity = function (input, successIcon, failureIcon) {
   if (input.validity.valid) {
@@ -28,6 +39,7 @@ function Signup() {
   const [movePassword, setMovePassword] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(true);
   const [showPassword, setShowPassword] = useState(true);
+  let history = useNavigate();
 
   // javascript validation API
   useEffect(() => {
@@ -126,15 +138,33 @@ function Signup() {
     showPassword ? setShowPassword(false) : setShowPassword(true);
   }
 
-  function createAccount(e) {
+  async function createAccount(e) {
     e.preventDefault();
-    console.log("welcome onboard");
-    console.log({ email, username, password, fullName });
-    // use firebase to create your account
+    try {
+      // disabled button to prevent double attempt at account creation
+      setButtonStatus(true);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = await userCredential.user;
+      // update user information
+      await updateProfile(user, {
+        displayName: username,
+      });
+      // after account creation, sign in user
+      await signInWithEmailAndPassword(auth, email, password);
+      // if sign up is successful, redirect to home page
+      history("/");
+    } catch (error) {
+      console.log(error.code);
+      console.log(error.message);
+    }
   }
 
   return (
-    <article className="signup-article" onSubmit={createAccount}>
+    <article className="signup-article">
       <img src={instragramAuthImage} alt="instragram on a phone" />
       <Form header="Instagram" handleSubmit={createAccount}>
         <legend>Sign up to see photos and videos from your friends.</legend>
