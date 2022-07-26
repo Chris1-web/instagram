@@ -1,15 +1,25 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/Button/Button.js";
 import Form from "../../components/Form/Form.js";
 import instragramAuthImage from "../../image/phone-instagram-screen.png";
 import "./Login.css";
+
+// firebase
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../Firebase/Firebase-init";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [moveEmail, setMoveEmail] = useState(false);
   const [movePassword, setMovePassword] = useState(false);
+  const [buttonStatus, setButtonStatus] = useState(true);
+  let history = useNavigate();
+
+  useEffect(() => {
+    password !== "" && email !== "" && setButtonStatus(false);
+  }, [password, email]);
 
   function handleEmail(e) {
     if (e.target.value === "") {
@@ -29,8 +39,25 @@ function Login() {
     setPassword(e.target.value);
   }
 
-  function submitLoginDetails(e) {
+  async function submitLoginDetails(e) {
+    const errorMessage = document.querySelector(".error-message");
     e.preventDefault();
+    try {
+      setButtonStatus(true);
+      await signInWithEmailAndPassword(auth, email, password);
+      // lead to home route
+      history("/");
+    } catch (error) {
+      setButtonStatus(false);
+      errorMessage.textContent = error.message
+        .replace(/firebase:/i, "")
+        .replace(/error/i, "")
+        .replace("(", "")
+        .replace(")", "")
+        .replace("auth", "")
+        .replace("/", "")
+        .replaceAll("-", " ");
+    }
   }
 
   return (
@@ -61,10 +88,11 @@ function Login() {
             onChange={handlePassword}
           />
         </div>
-        <Button disabled={true} title="Log In" />
+        <Button disabled={buttonStatus} title="Log In" />
         <footer>
           Don't have an account? <Link to="/signup">Sign Up</Link>
         </footer>
+        <p className="error-message"></p>
       </Form>
     </article>
   );

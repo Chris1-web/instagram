@@ -163,9 +163,15 @@ function Signup() {
       // if sign up is successful, redirect to home page
       history("/");
     } catch (error) {
-      console.log(error.code);
-      console.log(error.message);
-      errorMessage.textContent = error.message.slice(9);
+      setButtonStatus(false);
+      errorMessage.textContent = error.message
+        .replace(/firebase:/i, "")
+        .replace(/error/i, "")
+        .replace("(", "")
+        .replace(")", "")
+        .replace("auth", "")
+        .replace("/", "")
+        .replaceAll("-", " ");
     }
   }
 
