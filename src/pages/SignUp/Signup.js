@@ -13,8 +13,10 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../../Firebase/Firebase-init";
+import Loader from "../../components/Loader/Loader";
 
 //
 
@@ -39,7 +41,24 @@ function Signup() {
   const [movePassword, setMovePassword] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(true);
   const [showPassword, setShowPassword] = useState(true);
+  const [loading, setLoading] = useState(false);
   let history = useNavigate();
+
+  // onComponentMount, check if user is logged in already, if so, Redirect to home page
+  // if user is not signed in, show the login page
+  useEffect(() => {
+    setLoading(true);
+    const getUser = function () {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          history("/");
+        } else {
+          setLoading(false);
+        }
+      });
+    };
+    return () => getUser();
+  }, []);
 
   // javascript validation API
   useEffect(() => {
@@ -85,10 +104,6 @@ function Signup() {
         checkValidity(usernameInput, usernamesuccessIcon, usernamefailureIcon)
       );
     };
-  }, []);
-
-  useEffect(() => {
-    // auth.currentUser !== null && history("/");
   }, []);
 
   useEffect(() => {
@@ -141,7 +156,6 @@ function Signup() {
   function toggleInputType() {
     showPassword ? setShowPassword(false) : setShowPassword(true);
   }
-
   async function createAccount(e) {
     const errorMessage = document.querySelector(".error-message");
     e.preventDefault();
@@ -176,110 +190,115 @@ function Signup() {
   }
 
   return (
-    <article className="signup-article">
-      <img src={instragramAuthImage} alt="instragram on a phone" />
-      <Form header="Instagram" handleSubmit={createAccount}>
-        <legend>Sign up to see photos and videos from your friends.</legend>
-        <div className="email-container">
-          <label htmlFor="email" className={moveEmail ? "move" : ""}>
-            <span>Email address</span>
-            <span>
-              <img
-                className="email-success-icon hide"
-                src={checkmarkIcon}
-                alt="sucess"
+    <>
+      {loading && <Loader />}
+      {!loading && (
+        <article className="signup-article">
+          <img src={instragramAuthImage} alt="instragram on a phone" />
+          <Form header="Instagram" handleSubmit={createAccount}>
+            <legend>Sign up to see photos and videos from your friends.</legend>
+            <div className="email-container">
+              <label htmlFor="email" className={moveEmail ? "move" : ""}>
+                <span>Email address</span>
+                <span>
+                  <img
+                    className="email-success-icon hide"
+                    src={checkmarkIcon}
+                    alt="sucess"
+                  />
+                  <img
+                    className="email-failure-icon hide"
+                    src={cancelIcon}
+                    alt="failure"
+                  />
+                </span>
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                onChange={handleEmail}
+                value={email}
+                required
               />
-              <img
-                className="email-failure-icon hide"
-                src={cancelIcon}
-                alt="failure"
+            </div>
+            <div className="fullname-container">
+              <label htmlFor="full-name" className={moveFullName ? "move" : ""}>
+                <span>Full Name</span>
+                <span>
+                  <img
+                    className="fullName-success-icon hide"
+                    src={checkmarkIcon}
+                    alt="sucess"
+                  />
+                  <img
+                    className="fullName-failure-icon hide"
+                    src={cancelIcon}
+                    alt="failure"
+                  />
+                </span>
+              </label>
+              <input
+                maxLength={30}
+                type="text"
+                name="full-name"
+                id="full-name"
+                value={fullName}
+                onChange={handleFullName}
+                required
               />
-            </span>
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            onChange={handleEmail}
-            value={email}
-            required
-          />
-        </div>
-        <div className="fullname-container">
-          <label htmlFor="full-name" className={moveFullName ? "move" : ""}>
-            <span>Full Name</span>
-            <span>
-              <img
-                className="fullName-success-icon hide"
-                src={checkmarkIcon}
-                alt="sucess"
+            </div>
+            <div className="username-container">
+              <label htmlFor="username" className={moveUsername ? "move" : ""}>
+                <span>Username</span>
+                <span>
+                  <img
+                    className="username-success-icon hide"
+                    src={checkmarkIcon}
+                    alt="sucess"
+                  />
+                  <img
+                    className="username-failure-icon hide"
+                    src={cancelIcon}
+                    alt="failure"
+                  />
+                </span>
+              </label>
+              <input
+                maxLength={30}
+                type="text"
+                name="username"
+                id="username"
+                value={username}
+                onChange={handleUsername}
+                required
               />
-              <img
-                className="fullName-failure-icon hide"
-                src={cancelIcon}
-                alt="failure"
+            </div>
+            <div className="password-container">
+              <label htmlFor="password" className={movePassword ? "move" : ""}>
+                <span>Password</span>
+                <span className="show-password hide" onClick={toggleInputType}>
+                  {showPassword ? "show" : "hide"}
+                </span>
+              </label>
+              <input
+                type={showPassword ? "password" : "text"}
+                name="password"
+                id="password"
+                value={password}
+                onChange={handlePassword}
+                required
               />
-            </span>
-          </label>
-          <input
-            maxLength={30}
-            type="text"
-            name="full-name"
-            id="full-name"
-            value={fullName}
-            onChange={handleFullName}
-            required
-          />
-        </div>
-        <div className="username-container">
-          <label htmlFor="username" className={moveUsername ? "move" : ""}>
-            <span>Username</span>
-            <span>
-              <img
-                className="username-success-icon hide"
-                src={checkmarkIcon}
-                alt="sucess"
-              />
-              <img
-                className="username-failure-icon hide"
-                src={cancelIcon}
-                alt="failure"
-              />
-            </span>
-          </label>
-          <input
-            maxLength={30}
-            type="text"
-            name="username"
-            id="username"
-            value={username}
-            onChange={handleUsername}
-            required
-          />
-        </div>
-        <div className="password-container">
-          <label htmlFor="password" className={movePassword ? "move" : ""}>
-            <span>Password</span>
-            <span className="show-password hide" onClick={toggleInputType}>
-              {showPassword ? "show" : "hide"}
-            </span>
-          </label>
-          <input
-            type={showPassword ? "password" : "text"}
-            name="password"
-            id="password"
-            value={password}
-            onChange={handlePassword}
-            required
-          />
-        </div>
-        <Button disabled={buttonStatus} title="Sign Up" />
-        <footer>
-          Have an account? <Link to="/login">Log in</Link>
-        </footer>
-        <p className="error-message"></p>
-      </Form>
-    </article>
+            </div>
+            <Button disabled={buttonStatus} title="Sign Up" />
+            <footer>
+              Have an account? <Link to="/login">Log in</Link>
+            </footer>
+            <p className="error-message"></p>
+          </Form>
+        </article>
+      )}
+    </>
   );
 }
 

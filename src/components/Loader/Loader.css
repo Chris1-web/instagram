@@ -18,7 +18,14 @@
 .loading-screen footer {
   font-size: 1.5rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
   margin-top: auto;
   padding-bottom: 0.5rem;
+}
+
+.loading-screen a {
+  text-decoration: none;
+  font-size: 1.7rem;
+  color: var(--color-instagram-red);
 }

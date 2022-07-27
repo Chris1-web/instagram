@@ -6,8 +6,9 @@ import instragramAuthImage from "../../image/phone-instagram-screen.png";
 import "./Login.css";
 
 // firebase
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../Firebase/Firebase-init";
+import Loader from "../../components/Loader/Loader.js";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -15,7 +16,24 @@ function Login() {
   const [moveEmail, setMoveEmail] = useState(false);
   const [movePassword, setMovePassword] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(true);
+  const [loading, setLoading] = useState(false);
   let history = useNavigate();
+
+  // onComponentMount, check if user is logged in already, if so, Redirect to home page
+  // if user is not signed in, show the login page
+  useEffect(() => {
+    setLoading(true);
+    const getUser = function () {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          history("/");
+        } else {
+          setLoading(false);
+        }
+      });
+    };
+    return () => getUser();
+  }, []);
 
   useEffect(() => {
     password !== "" && email !== "" && setButtonStatus(false);
@@ -43,9 +61,9 @@ function Login() {
     const errorMessage = document.querySelector(".error-message");
     e.preventDefault();
     try {
+      // disable loading to prevent double submission, direct to home screen
       setButtonStatus(true);
       await signInWithEmailAndPassword(auth, email, password);
-      // lead to home route
       history("/");
     } catch (error) {
       setButtonStatus(false);
@@ -61,40 +79,45 @@ function Login() {
   }
 
   return (
-    <article className="login-article">
-      <img src={instragramAuthImage} alt="instragram on a phone" />
-      <Form header="Instagram" handleSubmit={submitLoginDetails}>
-        <div className="email-container">
-          <label htmlFor="email" className={moveEmail ? "move" : ""}>
-            Username or Email address
-          </label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={email}
-            onChange={handleEmail}
-          />
-        </div>
-        <div className="password-container">
-          <label htmlFor="password" className={movePassword ? "move" : ""}>
-            Password
-          </label>
-          <input
-            type="password"
-            name="password"
-            id="password"
-            value={password}
-            onChange={handlePassword}
-          />
-        </div>
-        <Button disabled={buttonStatus} title="Log In" />
-        <footer>
-          Don't have an account? <Link to="/signup">Sign Up</Link>
-        </footer>
-        <p className="error-message"></p>
-      </Form>
-    </article>
+    <>
+      {loading && <Loader />}
+      {!loading && (
+        <article className="login-article">
+          <img src={instragramAuthImage} alt="instragram on a phone" />
+          <Form header="Instagram" handleSubmit={submitLoginDetails}>
+            <div className="email-container">
+              <label htmlFor="email" className={moveEmail ? "move" : ""}>
+                Username or Email address
+              </label>
+              <input
+                type="email"
+                name="email"
+                id="email"
+                value={email}
+                onChange={handleEmail}
+              />
+            </div>
+            <div className="password-container">
+              <label htmlFor="password" className={movePassword ? "move" : ""}>
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                id="password"
+                value={password}
+                onChange={handlePassword}
+              />
+            </div>
+            <Button disabled={buttonStatus} title="Log In" />
+            <footer>
+              Don't have an account? <Link to="/signup">Sign Up</Link>
+            </footer>
+            <p className="error-message"></p>
+          </Form>
+        </article>
+      )}
+    </>
   );
 }
 
