@@ -34,7 +34,8 @@ function Home() {
   return (
     <div>
       {loading && <Loader />}
-      {!loading && (
+      {/* if screen is not loading and current user is not null */}
+      {!loading && currentUser && (
         <div>
           {console.log(currentUser)}
           <h1>Welcome Home</h1>
