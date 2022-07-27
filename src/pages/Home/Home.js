@@ -1,9 +1,12 @@
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../Firebase/Firebase-init";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 
 function Home() {
+  const [loading, setLoading] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   let history = useNavigate();
 
   async function signOutUser() {
@@ -11,11 +14,15 @@ function Home() {
     history("/login");
   }
 
+  // on componentDidMount, show loader  while confirming if user is logged in
+  // update current user
   useEffect(() => {
+    setLoading(true);
     const getUser = function () {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          return user;
+          setLoading(false);
+          setCurrentUser(user);
         } else {
           history("/login");
         }
@@ -26,8 +33,14 @@ function Home() {
 
   return (
     <div>
-      <h1>Welcome Home</h1>
-      <button onClick={signOutUser}>Hello World</button>
+      {loading && <Loader />}
+      {!loading && (
+        <div>
+          {console.log(currentUser)}
+          <h1>Welcome Home</h1>
+          <button onClick={signOutUser}>Hello World</button>
+        </div>
+      )}
     </div>
   );
 }
