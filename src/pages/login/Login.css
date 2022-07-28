@@ -34,6 +34,9 @@ article {
 }
 
 .login-article form label {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   font-size: 1.5rem;
   color: var(--color-light-grey);
   cursor: text;
@@ -48,6 +51,15 @@ article {
   font-size: 1.2rem;
   cursor: pointer;
   transform: translateY(-52%);
+}
+
+.show-password {
+  color: var(--color-black);
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  left: 86%;
+  font-size: 1.5rem;
 }
 
 .login-article form input {

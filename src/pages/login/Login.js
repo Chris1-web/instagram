@@ -6,37 +6,33 @@ import instragramAuthImage from "../../image/phone-instagram-screen.png";
 import "./Login.css";
 
 // firebase
-import { signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../Firebase/Firebase-init";
 import Loader from "../../components/Loader/Loader.js";
+import useUserStatus from "../../Hooks.js/useUserStatus.js";
 
 function Login() {
+  const { isOnline, loading } = useUserStatus(); //custom hook
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [moveEmail, setMoveEmail] = useState(false);
   const [movePassword, setMovePassword] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(true);
-  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
+
   let history = useNavigate();
 
-  // onComponentMount, check if user is logged in already, if so, Redirect to home page
-  // if user is not signed in, show the login page
   useEffect(() => {
-    setLoading(true);
-    const getUser = function () {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          history("/");
-        } else {
-          setLoading(false);
-        }
-      });
-    };
-    return () => getUser();
-  }, []);
+    // if user is online after loading is done, go to home page
+    !loading && isOnline && history("/");
+  }, [loading]);
 
   useEffect(() => {
     password !== "" && email !== "" && setButtonStatus(false);
+    const showPassword = document.querySelector(".show-password");
+    showPassword && password !== "" && showPassword.classList.remove("hide");
+    showPassword && password === "" && showPassword.classList.add("hide");
   }, [password, email]);
 
   function handleEmail(e) {
@@ -55,6 +51,10 @@ function Login() {
       setMovePassword(true);
     }
     setPassword(e.target.value);
+  }
+
+  function toggleInputType() {
+    showPassword ? setShowPassword(false) : setShowPassword(true);
   }
 
   async function submitLoginDetails(e) {
@@ -99,10 +99,13 @@ function Login() {
             </div>
             <div className="password-container">
               <label htmlFor="password" className={movePassword ? "move" : ""}>
-                Password
+                <span>Password</span>
+                <span className="show-password hide" onClick={toggleInputType}>
+                  {showPassword ? "show" : "hide"}
+                </span>
               </label>
               <input
-                type="password"
+                type={showPassword ? "password" : "text"}
                 name="password"
                 id="password"
                 value={password}

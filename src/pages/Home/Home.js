@@ -1,11 +1,12 @@
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { auth } from "../../Firebase/Firebase-init";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
+import useUserStatus from "../../Hooks.js/useUserStatus";
 
 function Home() {
-  const [loading, setLoading] = useState(false);
+  const { isOnline, loading } = useUserStatus(); //custom hook
   const [currentUser, setCurrentUser] = useState(null);
   let history = useNavigate();
 
@@ -14,31 +15,18 @@ function Home() {
     history("/login");
   }
 
-  // on componentDidMount, show loader  while confirming if user is logged in
-  // update current user
   useEffect(() => {
-    setLoading(true);
-    const getUser = function () {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          setLoading(false);
-          setCurrentUser(user);
-        } else {
-          history("/login");
-        }
-      });
-    };
-    return () => getUser();
-  }, []);
+    !loading && !isOnline && history("/login");
+    !loading && isOnline && setCurrentUser(auth.currentUser);
+  }, [loading]);
 
   return (
     <div>
       {loading && <Loader />}
-      {/* if screen is not loading and current user is not null */}
+      {/* if screen is not loading and user is not null */}
       {!loading && currentUser && (
         <div>
-          {console.log(currentUser)}
-          <h1>Welcome Home</h1>
+          <h1>Welcome Home {currentUser.displayName} </h1>
           <button onClick={signOutUser}>Hello World</button>
         </div>
       )}

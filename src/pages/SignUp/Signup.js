@@ -13,10 +13,10 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
   signInWithEmailAndPassword,
-  onAuthStateChanged,
 } from "firebase/auth";
 import { auth } from "../../Firebase/Firebase-init";
 import Loader from "../../components/Loader/Loader";
+import useUserStatus from "../../Hooks.js/useUserStatus";
 
 //
 
@@ -31,6 +31,8 @@ const checkValidity = function (input, successIcon, failureIcon) {
 };
 
 function Signup() {
+  const { isOnline, loading } = useUserStatus(); //custom hook
+
   const [email, setEmail] = useState("");
   const [moveEmail, setMoveEmail] = useState(false);
   const [fullName, setFullName] = useState("");
@@ -41,28 +43,11 @@ function Signup() {
   const [movePassword, setMovePassword] = useState(false);
   const [buttonStatus, setButtonStatus] = useState(true);
   const [showPassword, setShowPassword] = useState(true);
-  const [loading, setLoading] = useState(false);
-  let history = useNavigate();
 
-  // onComponentMount, check if user is logged in already, if so, Redirect to home page
-  // if user is not signed in, show the login page
-  useEffect(() => {
-    setLoading(true);
-    const getUser = function () {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          history("/");
-        } else {
-          setLoading(false);
-        }
-      });
-    };
-    return () => getUser();
-  }, []);
+  let history = useNavigate();
 
   // javascript validation API
   useEffect(() => {
-    // javascript validation API
     const emailInput = document.querySelector("#email");
     const fullNameInput = document.querySelector("#full-name");
     const usernameInput = document.querySelector("#username");
@@ -82,29 +67,34 @@ function Signup() {
     const usernamefailureIcon = document.querySelector(
       ".username-failure-icon"
     );
-    emailInput.addEventListener("input", () =>
+    emailInput?.addEventListener("input", () =>
       checkValidity(emailInput, emailsuccessIcon, emailfailureIcon)
     );
-    fullNameInput.addEventListener("input", () =>
+    fullNameInput?.addEventListener("input", () =>
       checkValidity(fullNameInput, fullNamesuccessIcon, fullNamefailureIcon)
     );
-    usernameInput.addEventListener("input", () =>
+    usernameInput?.addEventListener("input", () =>
       checkValidity(usernameInput, usernamesuccessIcon, usernamefailureIcon)
     );
 
     // unmounting
     return () => {
-      emailInput.removeEventListener("input", () =>
+      emailInput?.removeEventListener("input", () =>
         checkValidity(emailInput, emailsuccessIcon, emailfailureIcon)
       );
-      fullNameInput.removeEventListener("input", () =>
+      fullNameInput?.removeEventListener("input", () =>
         checkValidity(fullNameInput, fullNamesuccessIcon, fullNamefailureIcon)
       );
-      usernameInput.removeEventListener("input", () =>
+      usernameInput?.removeEventListener("input", () =>
         checkValidity(usernameInput, usernamesuccessIcon, usernamefailureIcon)
       );
     };
   }, []);
+
+  // if loading is false and use is online, change to home page
+  useEffect(() => {
+    !loading && isOnline && history("/");
+  }, [loading]);
 
   useEffect(() => {
     // show password button in password input
@@ -117,8 +107,9 @@ function Signup() {
       setButtonStatus(false);
     }
 
-    password !== "" && showPassword.classList.remove("hide");
-    password === "" && showPassword.classList.add("hide");
+    // if showPassword exist
+    showPassword && password !== "" && showPassword.classList.remove("hide");
+    showPassword && password === "" && showPassword.classList.add("hide");
   }, [email, fullName, username, password]);
 
   function handleEmail(e) {
