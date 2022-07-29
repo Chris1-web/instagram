@@ -8,6 +8,7 @@ function ProfileImage(props) {
           src={props.picture}
           alt={props.altText}
           className="profile-image"
+          data-testid="profile-image"
         />
       </Link>
     </>
