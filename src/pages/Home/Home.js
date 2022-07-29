@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader/Loader";
 import useUserStatus from "../../Hooks.js/useUserStatus";
+import Navbar from "../../components/Navbar/Navbar";
+import "./Home.css";
 
 function Home() {
   const { isOnline, loading } = useUserStatus(); //custom hook
@@ -26,8 +28,11 @@ function Home() {
       {/* if screen is not loading and user is not null */}
       {!loading && currentUser && (
         <div>
-          <h1>Welcome Home {currentUser.displayName} </h1>
-          <button onClick={signOutUser}>Hello World</button>
+          <Navbar />
+          <main className="home">
+            <h1>Welcome Home {currentUser.displayName} </h1>
+            <button onClick={signOutUser}>Hello World</button>
+          </main>
         </div>
       )}
     </div>

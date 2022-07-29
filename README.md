@@ -26,3 +26,5 @@
 14. message card
 15. chat box
 16. individual chat
+
+icons from IonIcons
