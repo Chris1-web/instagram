@@ -5,6 +5,7 @@ import {
   AddCircleOutline,
   HeartOutline,
 } from "react-ionicons";
+import ProfileImage from "../ProfileImage.js/ProfileImage";
 import "./Navbar.css";
 
 function Navbar(props) {
@@ -46,7 +47,11 @@ function Navbar(props) {
             class="icon"
           />
         </Link>
-        <Link to="/">Profile</Link>
+        <ProfileImage
+          link={props.link}
+          picture={props.picture}
+          altText={props.altText}
+        />
       </div>
     </nav>
   );

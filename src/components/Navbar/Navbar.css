@@ -4,7 +4,7 @@ nav {
   align-items: center;
   height: 8vh;
   padding: 1rem 17rem;
-  border-bottom: 0.2rem solid var(--color-black);
+  border-bottom: 0.2rem solid var(--color-dark-grey);
 }
 
 nav .logo {
@@ -21,4 +21,14 @@ nav .nav-links {
 nav a {
   text-decoration: none;
   color: black;
+}
+
+nav .profile-image {
+  height: 3rem;
+  padding: 0.2rem;
+}
+
+nav .profile-image:last-child {
+  border: 0.2rem solid var(--color-black);
+  border-radius: 10rem;
 }

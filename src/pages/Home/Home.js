@@ -7,6 +7,8 @@ import useUserStatus from "../../Hooks.js/useUserStatus";
 import Navbar from "../../components/Navbar/Navbar";
 import "./Home.css";
 
+import user from "../../image/user.png";
+
 function Home() {
   const { isOnline, loading } = useUserStatus(); //custom hook
   const [currentUser, setCurrentUser] = useState(null);
@@ -28,7 +30,7 @@ function Home() {
       {/* if screen is not loading and user is not null */}
       {!loading && currentUser && (
         <div>
-          <Navbar />
+          <Navbar link="/" picture={user} altText="babie" />
           <main className="home">
             <h1>Welcome Home {currentUser.displayName} </h1>
             <button onClick={signOutUser}>Hello World</button>
