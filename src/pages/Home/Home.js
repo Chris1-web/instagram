@@ -8,6 +8,8 @@ import Navbar from "../../components/Navbar/Navbar";
 import "./Home.css";
 
 import user from "../../image/user.png";
+import house from "../../image/house.jpg";
+import Post from "../../components/Post/Post";
 
 function Home() {
   const { isOnline, loading } = useUserStatus(); //custom hook
@@ -25,13 +27,19 @@ function Home() {
   }, [loading]);
 
   return (
-    <div>
+    <div className="home-page">
       {loading && <Loader />}
       {/* if screen is not loading and user is not null */}
       {!loading && currentUser && (
         <div>
           <Navbar link="/" picture={user} altText="babie" />
           <main className="home">
+            <Post
+              posterPicture={user}
+              posterUsername={currentUser.displayName}
+              postPicture={house}
+              caption="This is my first post"
+            />
             <h1>Welcome Home {currentUser.displayName} </h1>
             <button onClick={signOutUser}>Hello World</button>
           </main>
