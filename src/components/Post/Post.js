@@ -1,16 +1,19 @@
 import { HeartOutline, ChatbubbleOutline } from "react-ionicons";
+import ProfileImage from "../ProfileImage.js/ProfileImage";
 import "./Post.css";
 
 function Post(props) {
   return (
     <article className="post-box">
       <header>
-        <img
-          alt="poster profile"
-          className="poster-profile"
-          src={props.posterPicture}
-        />
-        <p className="poster-name">{props.posterUsername}</p>
+        <div className="poster-profile">
+          <ProfileImage
+            link="/"
+            picture={props.posterPicture}
+            alText={props.altText}
+          />
+          <p className="poster-name">{props.posterUsername}</p>
+        </div>
       </header>
       <img alt="post" src={props.postPicture} className="post-image" />
       <div className="icons">

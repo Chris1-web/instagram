@@ -5,6 +5,10 @@ nav {
   height: 8vh;
   padding: 1rem 17rem;
   border-bottom: 0.2rem solid var(--color-dark-grey);
+  /* sticky nav bar */
+  position: sticky;
+  top: 0;
+  background-color: var(--color-white);
 }
 
 nav .logo {

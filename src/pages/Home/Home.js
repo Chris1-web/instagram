@@ -38,10 +38,11 @@ function Home() {
               posterPicture={user}
               posterUsername={currentUser.displayName}
               postPicture={house}
+              altText={currentUser.displayName}
               caption="This is my first post"
             />
-            <h1>Welcome Home {currentUser.displayName} </h1>
-            <button onClick={signOutUser}>Hello World</button>
+            {/* <h1>Welcome Home {currentUser.displayName} </h1>
+            <button onClick={signOutUser}>Hello World</button> */}
           </main>
         </div>
       )}
