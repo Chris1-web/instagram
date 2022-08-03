@@ -32,7 +32,11 @@ function Home() {
       {/* if screen is not loading and user is not null */}
       {!loading && currentUser && (
         <div>
-          <Navbar link="/" picture={user} altText="babie" />
+          <Navbar
+            link={currentUser.displayName}
+            picture={currentUser.photoURL ?? user}
+            altText="babie"
+          />
           <main className="home">
             <Post
               posterPicture={user}
