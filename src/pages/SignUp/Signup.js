@@ -165,6 +165,7 @@ function Signup() {
       });
       // after account creation, sign in user
       await signInWithEmailAndPassword(auth, email, password);
+      // create profile document
       // if sign up is successful, redirect to home page
       history("/");
     } catch (error) {
