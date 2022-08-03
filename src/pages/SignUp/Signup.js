@@ -14,9 +14,10 @@ import {
   updateProfile,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../../Firebase/Firebase-init";
+import { auth, db } from "../../Firebase/Firebase-init";
 import Loader from "../../components/Loader/Loader";
 import useUserStatus from "../../Hooks.js/useUserStatus";
+import { setDoc, collection, doc, getDoc } from "firebase/firestore";
 
 //
 
@@ -67,9 +68,9 @@ function Signup() {
     const usernamefailureIcon = document.querySelector(
       ".username-failure-icon"
     );
-    emailInput?.addEventListener("input", () =>
-      checkValidity(emailInput, emailsuccessIcon, emailfailureIcon)
-    );
+    emailInput?.addEventListener("input", () => {
+      checkValidity(emailInput, emailsuccessIcon, emailfailureIcon);
+    });
     fullNameInput?.addEventListener("input", () =>
       checkValidity(fullNameInput, fullNamesuccessIcon, fullNamefailureIcon)
     );
@@ -89,7 +90,7 @@ function Signup() {
         checkValidity(usernameInput, usernamesuccessIcon, usernamefailureIcon)
       );
     };
-  }, []);
+  }, [loading]);
 
   // if loading is false and use is online, change to home page
   useEffect(() => {
@@ -99,9 +100,18 @@ function Signup() {
   useEffect(() => {
     // show password button in password input
     const showPassword = document.querySelector(".show-password");
+    const usernamefailureIcon = document.querySelector(
+      ".username-failure-icon"
+    );
 
-    // if any input is empty disable button
-    if (email === "" || fullName === "" || username === "" || password === "") {
+    // if any input is empty or username is already taken, disable button
+    if (
+      email === "" ||
+      fullName === "" ||
+      username === "" ||
+      password === "" ||
+      !usernamefailureIcon.classList.contains("hide")
+    ) {
       setButtonStatus(true);
     } else {
       setButtonStatus(false);
@@ -133,6 +143,8 @@ function Signup() {
       setMoveUsername(false);
     } else {
       setMoveUsername(true);
+      // check if username has already been taken
+      checkUsername(e.target.value);
     }
     setUsername(e.target.value);
   }
@@ -146,6 +158,29 @@ function Signup() {
   }
   function toggleInputType() {
     showPassword ? setShowPassword(false) : setShowPassword(true);
+  }
+
+  async function checkUsername(username) {
+    const errorMessage = document.querySelector(".error-message");
+    const usernamesuccessIcon = document.querySelector(
+      ".username-success-icon"
+    );
+    const usernamefailureIcon = document.querySelector(
+      ".username-failure-icon"
+    );
+    try {
+      const docRef = doc(db, "users", username);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        usernamefailureIcon.classList.remove("hide");
+        usernamesuccessIcon.classList.add("hide");
+      } else {
+        usernamefailureIcon.classList.add("hide");
+        usernamesuccessIcon.classList.remove("hide");
+      }
+    } catch (error) {
+      errorMessage.textContent = "error, please try again";
+    }
   }
   async function createAccount(e) {
     const errorMessage = document.querySelector(".error-message");
@@ -165,7 +200,15 @@ function Signup() {
       });
       // after account creation, sign in user
       await signInWithEmailAndPassword(auth, email, password);
-      // create profile document
+      // create profile document in users collection
+      await setDoc(doc(db, "users", user.displayName), {
+        userId: user.uid,
+        following: [],
+        followers: [],
+        website: "",
+        bio: "",
+        fullName,
+      });
       // if sign up is successful, redirect to home page
       history("/");
     } catch (error) {
