@@ -43,3 +43,7 @@ input {
 button:disabled {
   cursor: default;
 }
+
+li {
+  list-style: none;
+}
