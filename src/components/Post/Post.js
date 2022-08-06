@@ -1,5 +1,5 @@
 import { HeartOutline, ChatbubbleOutline } from "react-ionicons";
-import ProfileImage from "../ProfileImage.js/ProfileImage";
+import ProfileImage from "../ProfileImage/ProfileImage";
 import "./Post.css";
 
 function Post(props) {

@@ -6,7 +6,7 @@ import {
   AddCircleOutline,
   HeartOutline,
 } from "react-ionicons";
-import ProfileImage from "../ProfileImage.js/ProfileImage";
+import ProfileImage from "../ProfileImage/ProfileImage";
 import Loader from "../Loader/Loader";
 import "./Navbar.css";
 import user from "../../image/user.png";
