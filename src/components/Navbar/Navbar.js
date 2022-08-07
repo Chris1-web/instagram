@@ -33,9 +33,14 @@ function Navbar() {
     history("/login");
   }
 
-  function showDropdown() {
+  function toggleDropdown() {
     const dropdown = document.querySelector(".dropdown");
     dropdown.classList.toggle("hide");
+  }
+
+  function hideDropdown() {
+    const dropdown = document.querySelector(".dropdown");
+    dropdown.classList.add("hide");
   }
 
   return (
@@ -49,7 +54,7 @@ function Navbar() {
               <Link to="/">Instagram</Link>
             </h1>
             <div className="nav-links">
-              <Link to="/">
+              <Link to="/" onClick={hideDropdown}>
                 <HomeOutline
                   color={"#00000"}
                   height="30px"
@@ -57,7 +62,7 @@ function Navbar() {
                   class="icon"
                 />
               </Link>
-              <Link to="/">
+              <Link to="/" onClick={hideDropdown}>
                 <ChatbubbleEllipsesOutline
                   color={"#00000"}
                   height="30px"
@@ -65,7 +70,7 @@ function Navbar() {
                   class="icon"
                 />
               </Link>
-              <Link to="/">
+              <Link to="/" onClick={hideDropdown}>
                 <AddCircleOutline
                   color={"#00000"}
                   height="30px"
@@ -73,7 +78,7 @@ function Navbar() {
                   class="icon"
                 />
               </Link>
-              <Link to="/">
+              <Link to="/" onClick={hideDropdown}>
                 <HeartOutline
                   color={"#00000"}
                   height="30px"
@@ -87,16 +92,16 @@ function Navbar() {
                   alt="alt"
                   className="profile-image"
                   data-testid="profile-image"
-                  onClick={showDropdown}
+                  onClick={toggleDropdown}
                 />
                 <ul className="dropdown hide">
-                  <li>
+                  <li onClick={toggleDropdown}>
                     <Link to={currentUser.displayName}>
                       <img src={user} alt={currentUser.displayName} />
                       <span>Profile</span>
                     </Link>
                   </li>
-                  <li>
+                  <li onClick={toggleDropdown}>
                     <Link to="/">
                       <BookmarkOutline
                         color={"#00000"}
@@ -107,7 +112,7 @@ function Navbar() {
                       <span>Saved</span>
                     </Link>
                   </li>
-                  <li>
+                  <li onClick={toggleDropdown}>
                     <Link to="/">
                       <SettingsOutline
                         color={"#00000"}
@@ -118,7 +123,7 @@ function Navbar() {
                       <span>Settings</span>
                     </Link>
                   </li>
-                  <li>
+                  <li onClick={toggleDropdown}>
                     <span onClick={signOutUser}>Log out</span>
                   </li>
                 </ul>
