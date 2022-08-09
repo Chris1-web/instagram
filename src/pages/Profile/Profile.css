@@ -1,0 +1,95 @@
+.profile-section {
+  background-color: var(--color-grey);
+  min-height: 100vh;
+}
+
+.top-section {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  gap: 10rem;
+  border-bottom: 0.2rem solid var(--color-dark-grey);
+  max-width: 95rem;
+  margin: 0 auto;
+  padding: 2rem 5rem;
+}
+
+.top-section img {
+  width: 15rem;
+  height: auto;
+}
+
+.top-section .right {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.top-section .right .top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.top-section .right .top h3 {
+  font-size: 2.5rem;
+}
+
+.top-section .right .top button {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border: 0.2rem solid var(--color-dark-grey);
+  background-color: transparent;
+  border-radius: 0.3rem;
+}
+
+.top-section .right .middle {
+  display: flex;
+  gap: 1rem;
+}
+
+.top-section .right .middle span {
+  font-weight: bold;
+}
+
+.top-section .right .middle p {
+  font-size: 1.8rem;
+}
+
+.top-section .right .bottom {
+  font-size: 1.6rem;
+}
+
+.top-section .right .bottom p:first-child {
+  font-weight: bold;
+}
+
+.bottom-section .tags {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.bottom-section .posts {
+  max-width: 95rem;
+  margin: 0 auto;
+}
+
+.bottom-section .tags li {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-size: 1.5rem;
+  color: var(--color-light-grey);
+  padding: 1.5rem 0;
+  cursor: pointer;
+}
+
+.bottom-section .tags li.active {
+  border-top: 0.15rem solid var(--color-black);
+  color: var(--color-black);
+}
+
+a {
+  color: black;
+}
