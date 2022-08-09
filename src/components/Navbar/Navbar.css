@@ -83,6 +83,7 @@ nav .profile-container .dropdown li:last-child {
   cursor: pointer;
 }
 
+/* forceful hide */
 .dropdown.hide {
-  opacity: 0;
+  display: none !important;
 }
