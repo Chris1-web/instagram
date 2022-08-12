@@ -43,6 +43,15 @@
   border-radius: 0.3rem;
 }
 
+.top-section .right .top button.follow-btn {
+  background-color: var(--color-dark-blue);
+  font-weight: bold;
+  color: var(--color-white);
+  border: none;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
 .top-section .right .middle {
   display: flex;
   gap: 1rem;

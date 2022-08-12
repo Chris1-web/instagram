@@ -44,6 +44,7 @@ function Profile() {
                 <div className="top">
                   <h3>{profileUser.displayName}</h3>
                   <button>Edit Profile</button>
+                  {/* <button className="follow-btn">Follow</button> */}
                   <Link to="/">
                     <SettingsOutline
                       color={"#00000"}

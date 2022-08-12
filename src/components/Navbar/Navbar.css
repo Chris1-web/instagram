@@ -83,9 +83,13 @@ nav .profile-container .dropdown li:last-child {
   cursor: pointer;
 }
 
+/* sign out button */
 nav .profile-container .dropdown li button {
   border: none;
   background-color: transparent;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
 }
 
 /* forceful hide */
