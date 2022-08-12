@@ -31,6 +31,7 @@ function Navbar() {
   async function signOutUser() {
     await signOut(auth);
     history("/login");
+    console.log("logged out");
   }
 
   function toggleDropdown() {
@@ -124,7 +125,7 @@ function Navbar() {
                     </Link>
                   </li>
                   <li onClick={toggleDropdown}>
-                    <span onClick={signOutUser}>Log out</span>
+                    <button onClick={signOutUser}>Log out</button>
                   </li>
                 </ul>
               </div>
