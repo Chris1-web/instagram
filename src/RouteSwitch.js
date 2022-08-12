@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
+import EditProfile from "./pages/EditProfile/EditProfile";
 import Home from "./pages/Home/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/Profile/Profile";
@@ -12,6 +13,7 @@ function RouteSwitch() {
         <Route path="/" element={<Navbar />}>
           <Route index element={<Home />} />
           <Route path=":displayName" element={<Profile />} />
+          <Route path="accounts/edit" element={<EditProfile />} />
         </Route>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />

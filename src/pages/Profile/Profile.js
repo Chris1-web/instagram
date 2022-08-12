@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { SettingsOutline, BookmarkOutline, AppsOutline } from "react-ionicons";
 import user from "../../image/user.png";
 import "./Profile.css";
@@ -16,6 +16,8 @@ function Profile() {
   const [profileInfo, setProfileInfo] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  let history = useNavigate();
+
   // get current user data from database
   useState(() => {
     const getUserProfile = async function () {
@@ -29,6 +31,11 @@ function Profile() {
     }
     return () => getUserProfile();
   }, [loading]);
+
+  function editProfile() {
+    history("/accounts/edit");
+  }
+
   return (
     <>
       {loading && <Loader />}
@@ -43,9 +50,9 @@ function Profile() {
               <div className="right">
                 <div className="top">
                   <h3>{profileUser.displayName}</h3>
-                  <button>Edit Profile</button>
+                  <button onClick={editProfile}>Edit Profile</button>
                   {/* <button className="follow-btn">Follow</button> */}
-                  <Link to="/">
+                  <Link to="/accounts/edit">
                     <SettingsOutline
                       color={"#00000"}
                       height="25px"

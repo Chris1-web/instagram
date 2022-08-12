@@ -31,7 +31,6 @@ function Navbar() {
   async function signOutUser() {
     await signOut(auth);
     history("/login");
-    console.log("logged out");
   }
 
   function toggleDropdown() {
@@ -114,7 +113,7 @@ function Navbar() {
                     </Link>
                   </li>
                   <li onClick={toggleDropdown}>
-                    <Link to="/">
+                    <Link to="/accounts/edit">
                       <SettingsOutline
                         color={"#00000"}
                         height="25px"
