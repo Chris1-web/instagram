@@ -1,0 +1,83 @@
+.edit-profile-screen {
+  background-color: var(--color-grey);
+  min-height: 90vh;
+  padding: 6rem 0;
+}
+
+.edit-profile-screen form {
+  background-color: var(--color-white);
+  max-width: 80rem;
+  margin: 0 auto;
+  border: 0.2rem solid var(--color-dark-grey);
+  padding: 3rem 15rem;
+}
+
+.edit-profile-screen form img {
+  width: 4rem;
+  height: auto;
+}
+
+.edit-profile-screen form button {
+  margin-top: 2rem;
+  padding: 0.9rem 2rem;
+  cursor: pointer;
+  background-color: var(--color-dark-blue);
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 0.5rem;
+  justify-self: flex-end;
+}
+
+.edit-profile-screen form .profile div {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  margin-bottom: 1rem;
+  gap: 2rem;
+  justify-items: flex-end;
+  align-items: center;
+}
+
+.edit-profile-screen form .profile div.submit-button button {
+  grid-column: 2 / -1;
+  justify-self: flex-start;
+}
+
+.edit-profile-screen form .profile .picture-name-and-link div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  width: 100%;
+}
+
+.edit-profile-screen form .profile .picture-name-and-link div {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.edit-profile-screen form .profile .picture-name-and-link div a {
+  color: var(--color-dark-blue);
+  text-decoration: none;
+  font-size: 1.5rem;
+}
+
+.edit-profile-screen form label {
+  font-size: 2rem;
+}
+
+.edit-profile-screen form input,
+.edit-profile-screen form textarea {
+  width: 100%;
+  padding: 1rem 1rem;
+}
+
+.edit-profile-screen form input:focus {
+  border: 0.2rem solid blue;
+}
+
+div.info span {
+  grid-column: 2 / -1;
+  color: var(--color-light-grey);
+  font-size: 1.3rem;
+}
