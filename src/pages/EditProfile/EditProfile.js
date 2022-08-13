@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Form from "../../components/Form/Form";
 import { auth } from "../../Firebase/Firebase-init";
@@ -9,8 +9,25 @@ function EditProfile() {
   const [profileUser, setProfileUser] = useState("");
   const [profileInfo, setProfileInfo] = useState("");
 
+  // file picker event listener
+  useEffect(() => {
+    const profileImagePicker = document.querySelector(".profilePicturePicker");
+    function getImage(event) {
+      const fileList = event.target.files;
+      console.log(fileList);
+    }
+    profileImagePicker.addEventListener("change", getImage);
+    return () => profileImagePicker.removeEventListener("change", getImage);
+  }, []);
+
   function editUserProfile() {
     console.log("edit user profile");
+  }
+
+  function changeProfile(e) {
+    e.preventDefault();
+    const profileImagePicker = document?.querySelector(".profilePicturePicker");
+    profileImagePicker.click();
   }
 
   return (
@@ -24,14 +41,20 @@ function EditProfile() {
             />
             <div>
               <span>{auth.currentUser.displayName}</span>
-              <Link to="/">Change profile photo</Link>
+              <button onClick={changeProfile}>Change profile photo</button>
+              {/* hidden file picker to be called on change profile photo click */}
+              <input
+                type="file"
+                className="profilePicturePicker"
+                accept="image/png, image/jpeg"
+              />
             </div>
           </div>
           <div className="name-container">
             <label>Name</label>
             <input type="text" />
           </div>
-          <div class="info">
+          <div className="info">
             <span>
               Help people discover your account by using the name that you're
               known by: either your full name, nickname or business name.
@@ -49,7 +72,7 @@ function EditProfile() {
             <label>Bio</label>
             <textarea rows="4" column="50"></textarea>
           </div>
-          <div class="info">
+          <div className="info">
             <span>
               <h3>Personal information </h3>
               <p>
