@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import Form from "../../components/Form/Form";
-import { auth } from "../../Firebase/Firebase-init";
 import user from "../../image/user.png";
 import "./EditProfile.css";
 
-function EditProfile() {
-  const [profileUser, setProfileUser] = useState("");
-  const [profileInfo, setProfileInfo] = useState("");
+// firebase
+import { auth, storage } from "../../Firebase/Firebase-init";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { updateProfile } from "firebase/auth";
 
+function EditProfile() {
   // file picker event listener
   useEffect(() => {
     const profileImagePicker = document.querySelector(".profilePicturePicker");
     function getImage(event) {
-      const fileList = event.target.files;
-      console.log(fileList);
+      const file = event.target.files[0];
+      saveProfileImage(file);
+      console.log(file);
     }
     profileImagePicker.addEventListener("change", getImage);
     return () => profileImagePicker.removeEventListener("change", getImage);
@@ -30,6 +31,27 @@ function EditProfile() {
     profileImagePicker.click();
   }
 
+  async function saveProfileImage(file) {
+    try {
+      // upload image to cloud storage
+      const filePath = `${auth.currentUser.uid}/${file.name}`;
+      const newImageRef = ref(storage, filePath);
+      const fileSnapshot = await uploadBytesResumable(newImageRef, file);
+
+      // Generate a public URL for the file.
+      const publicImageUrl = await getDownloadURL(newImageRef);
+
+      // update user profile picture
+      await updateProfile(auth.currentUser, {
+        photoURL: publicImageUrl,
+      });
+
+      // CONTINUE HERE
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   return (
     <div className="edit-profile-screen">
       <Form handleSubmit={editUserProfile}>
@@ -38,6 +60,7 @@ function EditProfile() {
             <img
               src={auth.currentUser.profileURL ?? user}
               alt={auth.currentUser.displayName}
+              onClick={(e) => changeProfile(e)}
             />
             <div>
               <span>{auth.currentUser.displayName}</span>
