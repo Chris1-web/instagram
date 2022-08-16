@@ -2,34 +2,20 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { SettingsOutline, BookmarkOutline, AppsOutline } from "react-ionicons";
 import user from "../../image/user.png";
 import "./Profile.css";
-import { useState } from "react";
 import Loader from "../../components/Loader/Loader";
 
 // firebase
 import { auth } from "../../Firebase/Firebase-init";
-import { getDoc, doc } from "firebase/firestore";
-import { db } from "../../Firebase/Firebase-init";
+import useProfileInfo from "../../Hooks/useProfileInfo";
 
 function Profile() {
   const { displayName } = useParams();
-  const [profileUser, setProfileUser] = useState(auth.currentUser);
-  const [profileInfo, setProfileInfo] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const { loading, profileInfo, profileUser } = useProfileInfo(
+    displayName,
+    auth.currentUser
+  ); //custom hooks to get user database data
 
   let history = useNavigate();
-
-  // get current user data from database
-  useState(() => {
-    const getUserProfile = async function () {
-      const userInfo = await getDoc(doc(db, "users", displayName));
-      const data = userInfo.data();
-      setProfileInfo(data);
-      setLoading(false);
-      console.log("async function");
-    };
-    getUserProfile();
-    return () => getUserProfile();
-  }, []);
 
   function editProfile() {
     history("/accounts/edit");
