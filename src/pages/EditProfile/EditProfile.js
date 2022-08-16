@@ -14,6 +14,22 @@ function EditProfile() {
   const { loading, profileInfo, profileUser } = useProfileInfo(
     auth.currentUser
   );
+  const [name, setName] = useState("");
+  const [profilePicture, setProfilePicture] = useState("");
+  const [fullName, setFullName] = useState("");
+  const [website, setWebsite] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    if (!loading) {
+      setName(profileUser.displayName);
+      setProfilePicture(profileUser.photoURL);
+      setFullName(profileInfo.fullName);
+      setWebsite(profileInfo.website);
+      setEmail(profileInfo.email);
+    }
+  }, [loading]);
+
   // file picker event listener
   useEffect(() => {
     const profileImagePicker = document.querySelector(".profilePicturePicker");
@@ -71,12 +87,12 @@ function EditProfile() {
             <div className="profile">
               <div className="picture-name-and-link">
                 <img
-                  src={auth.currentUser.photoURL ?? user}
-                  alt={auth.currentUser.displayName}
+                  src={profilePicture ?? user}
+                  alt={name}
                   onClick={(e) => changeProfile(e)}
                 />
                 <div>
-                  <span>{auth.currentUser.displayName}</span>
+                  <span>{name}</span>
                   <button onClick={changeProfile}>Change profile photo</button>
                   {/* hidden file picker to be called on change profile photo click */}
                   <input
@@ -88,7 +104,7 @@ function EditProfile() {
               </div>
               <div className="name-container">
                 <label>Name</label>
-                <input type="text" />
+                <input type="text" value={fullName} />
               </div>
               <div className="info">
                 <span>
@@ -99,11 +115,11 @@ function EditProfile() {
               </div>
               <div className="username-container">
                 <label>Username</label>
-                <input type="text" />
+                <input type="text" value={name} />
               </div>
               <div className="website-container">
                 <label>Website</label>
-                <input type="text" />
+                <input type="text" value={website} />
               </div>
               <div className="bio-container">
                 <label>Bio</label>
@@ -121,11 +137,7 @@ function EditProfile() {
               </div>
               <div className="email-container">
                 <label>Email address</label>
-                <input type="email" />
-              </div>
-              <div className="phone-container">
-                <label>Phone number</label>
-                <input type="number" />
+                <input type="email" value={email} />
               </div>
               <div className="submit-button">
                 <button>Submit</button>
