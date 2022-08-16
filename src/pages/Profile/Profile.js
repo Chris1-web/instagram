@@ -1,4 +1,4 @@
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { SettingsOutline, BookmarkOutline, AppsOutline } from "react-ionicons";
 import user from "../../image/user.png";
 import "./Profile.css";
@@ -9,9 +9,7 @@ import { auth } from "../../Firebase/Firebase-init";
 import useProfileInfo from "../../Hooks/useProfileInfo";
 
 function Profile() {
-  const { displayName } = useParams();
   const { loading, profileInfo, profileUser } = useProfileInfo(
-    displayName,
     auth.currentUser
   ); //custom hooks to get user database data
 
