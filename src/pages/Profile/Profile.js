@@ -25,12 +25,11 @@ function Profile() {
       const data = userInfo.data();
       setProfileInfo(data);
       setLoading(false);
+      console.log("async function");
     };
-    if (loading) {
-      getUserProfile();
-    }
+    getUserProfile();
     return () => getUserProfile();
-  }, [loading]);
+  }, []);
 
   function editProfile() {
     history("/accounts/edit");
