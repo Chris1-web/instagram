@@ -16,7 +16,7 @@ import {
 } from "firebase/auth";
 import { auth, db } from "../../Firebase/Firebase-init";
 import Loader from "../../components/Loader/Loader";
-import useUserStatus from "../../Hooks.js/useUserStatus";
+import useUserStatus from "../../Hooks/useUserStatus";
 import { setDoc, collection, doc, getDoc } from "firebase/firestore";
 
 //

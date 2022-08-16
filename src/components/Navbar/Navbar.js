@@ -13,7 +13,7 @@ import "./Navbar.css";
 import user from "../../image/user.png";
 
 // firebase
-import useUserStatus from "../../Hooks.js/useUserStatus";
+import useUserStatus from "../../Hooks/useUserStatus";
 import { signOut } from "firebase/auth";
 import { auth } from "../../Firebase/Firebase-init";
 

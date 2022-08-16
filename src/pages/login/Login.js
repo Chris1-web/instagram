@@ -9,7 +9,7 @@ import "./Login.css";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../Firebase/Firebase-init";
 import Loader from "../../components/Loader/Loader.js";
-import useUserStatus from "../../Hooks.js/useUserStatus.js";
+import useUserStatus from "../../Hooks/useUserStatus.js";
 
 function Login() {
   const { isOnline, loading } = useUserStatus(); //custom hook

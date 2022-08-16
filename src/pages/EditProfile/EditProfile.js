@@ -46,6 +46,11 @@ function EditProfile() {
         photoURL: publicImageUrl,
       });
 
+      console.log(fileSnapshot, fileSnapshot.metadata.fullPath);
+      console.log(publicImageUrl);
+
+      console.log(auth.currentUser);
+
       // CONTINUE HERE
     } catch (error) {
       console.log(error.message);
@@ -58,7 +63,7 @@ function EditProfile() {
         <div className="profile">
           <div className="picture-name-and-link">
             <img
-              src={auth.currentUser.profileURL ?? user}
+              src={auth.currentUser.photoURL ?? user}
               alt={auth.currentUser.displayName}
               onClick={(e) => changeProfile(e)}
             />
