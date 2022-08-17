@@ -221,8 +221,8 @@ function Signup() {
         followers: [],
         website: "",
         bio: "",
-        fullName: fullName.trim(),
-        username: username.trim(),
+        fullName,
+        username,
       });
       // if sign up is successful, redirect to home page
       history("/");

@@ -8,13 +8,7 @@ import "./EditProfile.css";
 // firebase
 import { auth, storage, db } from "../../Firebase/Firebase-init";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import {
-  updateDoc,
-  getDocs,
-  where,
-  query,
-  collection,
-} from "firebase/firestore";
+import { updateDoc, getDoc, doc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import useProfileInfo from "../../Hooks/useProfileInfo";
 
@@ -91,53 +85,49 @@ function EditProfile() {
     }
   }
 
+  // if any of the user database is changed, update doc
+  // else if any of the default firebase user data is changed, update profile
   async function updateProfileInfo() {
-    let userData;
-    const currentUserInfo = await getDocs(
-      query(collection(db, "users"), where("username", "==", username))
-    );
-    console.log(currentUserInfo[0]);
-    // if (
-    //   fullName !== profileInfo.fullName ||
-    //   website !== profileInfo.website ||
-    //   bio !== profileInfo.bio
-    // ) {
-    //   console.log("fullName has been changed");
-    //   await updateDoc(currentUserInfo, {
-    //     fullName,
-    //     website,
-    //     bio,
-    //   });
-    // } else if (
-    //   username !== profileUser.displayName ||
-    //   email !== profileUser.email
-    // ) {
-    //   await updateProfile(auth, {
-    //     displayName: username,
-    //     email,
-    //   });
-    // }
+    const userInfo = doc(db, "users", profileUser.uid);
+    if (
+      fullName !== profileInfo.fullName ||
+      website !== profileInfo.website ||
+      bio !== profileInfo.bio
+    ) {
+      await updateDoc(userInfo, {
+        fullName,
+        website,
+        bio,
+      });
+    } else if (
+      username !== profileUser.displayName ||
+      email !== profileUser.email
+    ) {
+      await updateProfile(auth.currentUser, {
+        displayName: username,
+        email,
+      });
+    }
   }
 
   function changeFullName(e) {
-    setFullName(e.target.value);
+    setFullName(e.target.value.trim());
     setButtonStatus(false);
-    console.log(fullName);
   }
   function changeUsername(e) {
-    console.log(e.target.value);
+    setUsername(e.target.value.trim());
     setButtonStatus(false);
   }
   function changeWebsite(e) {
-    console.log(e.target.value);
+    setWebsite(e.target.value.trim());
     setButtonStatus(false);
   }
   function changeEmail(e) {
-    console.log(e.target.value);
+    setEmail(e.target.value.trim());
     setButtonStatus(false);
   }
   function changeBio(e) {
-    console.log(e.target.value);
+    setBio(e.target.value.trim());
     setButtonStatus(false);
   }
 
