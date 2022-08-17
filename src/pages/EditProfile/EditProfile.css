@@ -80,6 +80,11 @@
   border: 0.2rem solid blue;
 }
 
+.edit-profile-screen form button:disabled {
+  background-color: var(--color-light-blue);
+  cursor: auto;
+}
+
 div.info span {
   grid-column: 2 / -1;
   color: var(--color-light-grey);

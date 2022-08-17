@@ -1,32 +1,38 @@
 import { useEffect, useState } from "react";
 import Form from "../../components/Form/Form";
 import user from "../../image/user.png";
+import Button from "../../components/Button/Button";
+import Loader from "../../components/Loader/Loader";
 import "./EditProfile.css";
 
 // firebase
 import { auth, storage } from "../../Firebase/Firebase-init";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { doc, updateDoc } from "firebase/firestore";
+import { db } from "../../Firebase/Firebase-init";
 import { updateProfile } from "firebase/auth";
-import Loader from "../../components/Loader/Loader";
 import useProfileInfo from "../../Hooks/useProfileInfo";
 
 function EditProfile() {
   const { loading, profileInfo, profileUser } = useProfileInfo(
     auth.currentUser
-  );
-  const [name, setName] = useState("");
+  ); //custom hook
+  const [buttonStatus, setButtonStatus] = useState(true);
+  const [username, setUsername] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [fullName, setFullName] = useState("");
   const [website, setWebsite] = useState("");
   const [email, setEmail] = useState("");
+  const [bio, setBio] = useState("");
 
   useEffect(() => {
     if (!loading) {
-      setName(profileUser.displayName);
+      setUsername(profileUser.displayName);
       setProfilePicture(profileUser.photoURL);
       setFullName(profileInfo.fullName);
       setWebsite(profileInfo.website);
-      setEmail(profileInfo.email);
+      setEmail(profileUser.email);
+      setBio(profileInfo.bio);
     }
   }, [loading]);
 
@@ -42,11 +48,13 @@ function EditProfile() {
     return () => profileImagePicker?.removeEventListener("change", getImage);
   }, []);
 
-  function editUserProfile() {
-    console.log("edit user profile");
+  function editUserProfile(e) {
+    e.preventDefault();
+    setButtonStatus(true);
+    updateProfileInfo();
   }
 
-  function changeProfile(e) {
+  function changeProfilePicture(e) {
     e.preventDefault();
     const profileImagePicker = document?.querySelector(".profilePicturePicker");
     profileImagePicker.click();
@@ -78,22 +86,62 @@ function EditProfile() {
     }
   }
 
+  async function updateProfileInfo() {
+    const currentUserInfo = doc(db, "users", username);
+    if (
+      fullName !== profileInfo.fullName ||
+      website !== profileInfo.website ||
+      bio !== profileInfo.bio
+    ) {
+      console.log("fullName has been changed");
+      await updateDoc(currentUserInfo, {
+        fullName: fullName.trim(),
+        website: website.trim(),
+        bio: bio.trim(),
+      });
+    }
+  }
+
+  function changeFullName(e) {
+    setFullName(e.target.value);
+    setButtonStatus(false);
+    console.log(fullName);
+  }
+  function changeUsername(e) {
+    console.log(e.target.value);
+    setButtonStatus(false);
+  }
+  function changeWebsite(e) {
+    console.log(e.target.value);
+    setButtonStatus(false);
+  }
+  function changeEmail(e) {
+    console.log(e.target.value);
+    setButtonStatus(false);
+  }
+  function changeBio(e) {
+    console.log(e.target.value);
+    setButtonStatus(false);
+  }
+
   return (
     <>
       {loading && <Loader />}
-      {!loading && (
+      {!loading && username && (
         <div className="edit-profile-screen">
           <Form handleSubmit={editUserProfile}>
             <div className="profile">
               <div className="picture-name-and-link">
                 <img
                   src={profilePicture ?? user}
-                  alt={name}
-                  onClick={(e) => changeProfile(e)}
+                  alt={username}
+                  onClick={(e) => changeProfilePicture(e)}
                 />
                 <div>
-                  <span>{name}</span>
-                  <button onClick={changeProfile}>Change profile photo</button>
+                  <span>{username}</span>
+                  <button onClick={changeProfilePicture}>
+                    Change profile photo
+                  </button>
                   {/* hidden file picker to be called on change profile photo click */}
                   <input
                     type="file"
@@ -104,7 +152,7 @@ function EditProfile() {
               </div>
               <div className="name-container">
                 <label>Name</label>
-                <input type="text" value={fullName} />
+                <input type="text" value={fullName} onChange={changeFullName} />
               </div>
               <div className="info">
                 <span>
@@ -115,15 +163,18 @@ function EditProfile() {
               </div>
               <div className="username-container">
                 <label>Username</label>
-                <input type="text" value={name} />
+                <input type="text" value={username} onChange={changeUsername} />
               </div>
               <div className="website-container">
                 <label>Website</label>
-                <input type="text" value={website} />
+                <input type="text" value={website} onChange={changeWebsite} />
               </div>
               <div className="bio-container">
                 <label>Bio</label>
-                <textarea rows="4" column="50"></textarea>
+                <textarea rows={3} value={bio} onChange={changeBio} />
+                {/* <textarea rows="4" column="50">
+                  {bio}
+                </textarea> */}
               </div>
               <div className="info">
                 <span>
@@ -137,10 +188,10 @@ function EditProfile() {
               </div>
               <div className="email-container">
                 <label>Email address</label>
-                <input type="email" value={email} />
+                <input type="email" value={email} onChange={changeEmail} />
               </div>
               <div className="submit-button">
-                <button>Submit</button>
+                <Button disabled={buttonStatus} title="Submit" />
               </div>
             </div>
           </Form>
