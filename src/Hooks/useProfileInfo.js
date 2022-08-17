@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // firebase
-import { getDocs, where, query, collection } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 import { db } from "../Firebase/Firebase-init";
 
 // hook to get signed in user information from users collection
@@ -12,16 +12,8 @@ function useProfileInfo(userObject) {
   const [profileUser, setProfileUser] = useState(null);
   useEffect(() => {
     const getUserProfile = async function () {
-      const userInfo = await getDocs(
-        query(
-          collection(db, "users"),
-          where("username", "==", userObject.displayName)
-        )
-      );
-      let data;
-      userInfo.forEach((doc) => {
-        data = doc.data();
-      });
+      const userInfo = await getDoc(doc(db, "users", userObject.uid));
+      const data = userInfo.data();
       setProfileUser(userObject);
       setProfileInfo(data);
       setLoading(false);

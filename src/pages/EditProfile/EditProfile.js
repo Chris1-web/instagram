@@ -6,10 +6,15 @@ import Loader from "../../components/Loader/Loader";
 import "./EditProfile.css";
 
 // firebase
-import { auth, storage } from "../../Firebase/Firebase-init";
+import { auth, storage, db } from "../../Firebase/Firebase-init";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { doc, updateDoc } from "firebase/firestore";
-import { db } from "../../Firebase/Firebase-init";
+import {
+  updateDoc,
+  getDocs,
+  where,
+  query,
+  collection,
+} from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import useProfileInfo from "../../Hooks/useProfileInfo";
 
@@ -87,19 +92,31 @@ function EditProfile() {
   }
 
   async function updateProfileInfo() {
-    const currentUserInfo = doc(db, "users", username);
-    if (
-      fullName !== profileInfo.fullName ||
-      website !== profileInfo.website ||
-      bio !== profileInfo.bio
-    ) {
-      console.log("fullName has been changed");
-      await updateDoc(currentUserInfo, {
-        fullName: fullName.trim(),
-        website: website.trim(),
-        bio: bio.trim(),
-      });
-    }
+    let userData;
+    const currentUserInfo = await getDocs(
+      query(collection(db, "users"), where("username", "==", username))
+    );
+    console.log(currentUserInfo[0]);
+    // if (
+    //   fullName !== profileInfo.fullName ||
+    //   website !== profileInfo.website ||
+    //   bio !== profileInfo.bio
+    // ) {
+    //   console.log("fullName has been changed");
+    //   await updateDoc(currentUserInfo, {
+    //     fullName,
+    //     website,
+    //     bio,
+    //   });
+    // } else if (
+    //   username !== profileUser.displayName ||
+    //   email !== profileUser.email
+    // ) {
+    //   await updateProfile(auth, {
+    //     displayName: username,
+    //     email,
+    //   });
+    // }
   }
 
   function changeFullName(e) {
