@@ -22,7 +22,7 @@ function Profile() {
   return (
     <>
       {loading && <Loader />}
-      {!loading && (
+      {!loading && profileInfo && profileUser && (
         <div className="profile-section">
           <>
             <div className="top-section">

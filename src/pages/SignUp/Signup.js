@@ -17,7 +17,14 @@ import {
 import { auth, db } from "../../Firebase/Firebase-init";
 import Loader from "../../components/Loader/Loader";
 import useUserStatus from "../../Hooks/useUserStatus";
-import { setDoc, doc, getDoc } from "firebase/firestore";
+import {
+  setDoc,
+  doc,
+  getDocs,
+  collection,
+  where,
+  query,
+} from "firebase/firestore";
 
 //
 
@@ -169,15 +176,22 @@ function Signup() {
       ".username-failure-icon"
     );
     try {
-      const docRef = doc(db, "users", username);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        usernamefailureIcon.classList.remove("hide");
-        usernamesuccessIcon.classList.add("hide");
-      } else {
-        usernamefailureIcon.classList.add("hide");
-        usernamesuccessIcon.classList.remove("hide");
-      }
+      const account = query(
+        collection(db, "users"),
+        where("username", "==", username)
+      );
+
+      const querySnapshot = await getDocs(account);
+      querySnapshot.forEach((user) => {
+        if (user.data()) {
+          setButtonStatus(true);
+          usernamefailureIcon.classList.remove("hide");
+          usernamesuccessIcon.classList.add("hide");
+        } else {
+          usernamefailureIcon.classList.add("hide");
+          usernamesuccessIcon.classList.remove("hide");
+        }
+      });
     } catch (error) {
       errorMessage.textContent = "error, please try again";
     }
@@ -201,13 +215,14 @@ function Signup() {
       // after account creation, sign in user
       await signInWithEmailAndPassword(auth, email, password);
       // create profile document in users collection
-      await setDoc(doc(db, "users", user.displayName), {
+      await setDoc(doc(db, "users", user.uid), {
         userId: user.uid,
         following: [],
         followers: [],
         website: "",
         bio: "",
-        fullName,
+        fullName: fullName.trim(),
+        username: username.trim(),
       });
       // if sign up is successful, redirect to home page
       history("/");
