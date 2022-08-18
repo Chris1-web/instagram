@@ -90,3 +90,26 @@ div.info span {
   color: var(--color-light-grey);
   font-size: 1.3rem;
 }
+
+div.profile-saved {
+  position: absolute;
+  top: 95%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding-left: 1rem;
+  color: var(--color-white);
+  background-color: var(--color-light-grey);
+  height: 5.3vh;
+  font-size: 1.6rem;
+  transform: translateY(100%);
+  transition: all 300ms ease-in;
+}
+
+div.profile-saved.show {
+  transform: translateY(0);
+}
+
+div.profile-saved.hide {
+  display: none;
+}

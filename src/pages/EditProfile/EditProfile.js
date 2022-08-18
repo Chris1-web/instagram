@@ -85,8 +85,8 @@ function EditProfile() {
     }
   }
 
-  // if any of the user database is changed, update doc
-  // else if any of the default firebase user data is changed, update profile
+  // if any of the user database is changed, update doc method is called
+  // else if any of the default firebase user data is changed, update profile is called
   async function updateProfileInfo() {
     const userInfo = doc(db, "users", profileUser.uid);
     if (
@@ -95,39 +95,52 @@ function EditProfile() {
       bio !== profileInfo.bio
     ) {
       await updateDoc(userInfo, {
-        fullName,
-        website,
-        bio,
+        fullName: fullName.trim(),
+        website: website.trim(),
+        bio: bio.trim(),
       });
     } else if (
       username !== profileUser.displayName ||
       email !== profileUser.email
     ) {
       await updateProfile(auth.currentUser, {
-        displayName: username,
-        email,
+        displayName: username.trim(),
+        email: email.trim(),
       });
     }
+    showProfileUpdateDiv();
+  }
+
+  function showProfileUpdateDiv() {
+    const profileSavedDiv = document.querySelector(".profile-saved");
+    profileSavedDiv.classList.remove("hide");
+    setTimeout(() => {
+      profileSavedDiv.classList.add("show");
+    }, 300);
+    setTimeout(() => {
+      profileSavedDiv.classList.remove("show");
+      profileSavedDiv.classList.add("hide");
+    }, 3000);
   }
 
   function changeFullName(e) {
-    setFullName(e.target.value.trim());
+    setFullName(e.target.value);
     setButtonStatus(false);
   }
   function changeUsername(e) {
-    setUsername(e.target.value.trim());
+    setUsername(e.target.value);
     setButtonStatus(false);
   }
   function changeWebsite(e) {
-    setWebsite(e.target.value.trim());
+    setWebsite(e.target.value);
     setButtonStatus(false);
   }
   function changeEmail(e) {
-    setEmail(e.target.value.trim());
+    setEmail(e.target.value);
     setButtonStatus(false);
   }
   function changeBio(e) {
-    setBio(e.target.value.trim());
+    setBio(e.target.value);
     setButtonStatus(false);
   }
 
@@ -179,9 +192,6 @@ function EditProfile() {
               <div className="bio-container">
                 <label>Bio</label>
                 <textarea rows={3} value={bio} onChange={changeBio} />
-                {/* <textarea rows="4" column="50">
-                  {bio}
-                </textarea> */}
               </div>
               <div className="info">
                 <span>
@@ -202,6 +212,7 @@ function EditProfile() {
               </div>
             </div>
           </Form>
+          <div className="profile-saved hide">Profile saved.</div>
         </div>
       )}
     </>
