@@ -88,27 +88,29 @@ function EditProfile() {
   // if any of the user database is changed, update doc method is called
   // else if any of the default firebase user data is changed, update profile is called
   async function updateProfileInfo() {
-    const userInfo = doc(db, "users", profileUser.uid);
-    if (
-      fullName !== profileInfo.fullName ||
-      website !== profileInfo.website ||
-      bio !== profileInfo.bio
-    ) {
-      await updateDoc(userInfo, {
-        fullName: fullName.trim(),
-        website: website.trim(),
-        bio: bio.trim(),
-      });
-    } else if (
-      username !== profileUser.displayName ||
-      email !== profileUser.email
-    ) {
-      await updateProfile(auth.currentUser, {
-        displayName: username.trim(),
-        email: email.trim(),
-      });
+    try {
+      const userInfo = doc(db, "users", profileUser.uid);
+      if (
+        fullName !== profileInfo.fullName ||
+        website !== profileInfo.website ||
+        bio !== profileInfo.bio
+      ) {
+        await updateDoc(userInfo, {
+          fullName: fullName.trim(),
+          website: website.trim(),
+          bio: bio.trim(),
+        });
+      } else if (email !== profileUser.email) {
+        await updateProfile(auth.currentUser, {
+          email: email.trim(),
+        });
+      }
+      showProfileUpdateDiv();
+    } catch (error) {
+      const profileSavedDiv = document.querySelector(".profile-saved");
+      profileSavedDiv.textContent = error.message;
+      showProfileUpdateDiv();
     }
-    showProfileUpdateDiv();
   }
 
   function showProfileUpdateDiv() {
@@ -125,10 +127,6 @@ function EditProfile() {
 
   function changeFullName(e) {
     setFullName(e.target.value);
-    setButtonStatus(false);
-  }
-  function changeUsername(e) {
-    setUsername(e.target.value);
     setButtonStatus(false);
   }
   function changeWebsite(e) {
@@ -180,10 +178,6 @@ function EditProfile() {
                   you're known by: either your full name, nickname or business
                   name.
                 </span>
-              </div>
-              <div className="username-container">
-                <label>Username</label>
-                <input type="text" value={username} onChange={changeUsername} />
               </div>
               <div className="website-container">
                 <label>Website</label>
