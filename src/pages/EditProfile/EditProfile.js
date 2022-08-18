@@ -61,6 +61,8 @@ function EditProfile() {
 
   async function saveProfileImage(file) {
     try {
+      // show loader on image
+      showLoader();
       // upload image to cloud storage
       const filePath = `${auth.currentUser.uid}/${file.name}`;
       const newImageRef = ref(storage, filePath);
@@ -74,15 +76,18 @@ function EditProfile() {
         photoURL: publicImageUrl,
       });
 
-      console.log(fileSnapshot, fileSnapshot.metadata.fullPath);
-      console.log(publicImageUrl);
-
-      console.log(auth.currentUser);
-
+      showProfileUpdateDiv("Profile photo updated.");
+      // hide loader on image
+      showLoader();
       // CONTINUE HERE
     } catch (error) {
       console.log(error.message);
     }
+  }
+
+  function showLoader() {
+    const loader = document.querySelector(".loader");
+    loader.classList.toggle("hide");
   }
 
   // if any of the user database is changed, update doc method is called
@@ -105,16 +110,15 @@ function EditProfile() {
           email: email.trim(),
         });
       }
-      showProfileUpdateDiv();
+      showProfileUpdateDiv("Profile saved.");
     } catch (error) {
-      const profileSavedDiv = document.querySelector(".profile-saved");
-      profileSavedDiv.textContent = error.message;
-      showProfileUpdateDiv();
+      showProfileUpdateDiv("Sorry, there was an error.");
     }
   }
 
-  function showProfileUpdateDiv() {
+  function showProfileUpdateDiv(message) {
     const profileSavedDiv = document.querySelector(".profile-saved");
+    profileSavedDiv.textContent = message;
     profileSavedDiv.classList.remove("hide");
     setTimeout(() => {
       profileSavedDiv.classList.add("show");
@@ -155,6 +159,9 @@ function EditProfile() {
                   alt={username}
                   onClick={(e) => changeProfilePicture(e)}
                 />
+                {/* loader */}
+                <span class="loader hide"></span>
+                {/* loader */}
                 <div>
                   <span>{username}</span>
                   <button onClick={changeProfilePicture}>
@@ -206,7 +213,7 @@ function EditProfile() {
               </div>
             </div>
           </Form>
-          <div className="profile-saved hide">Profile saved.</div>
+          <div className="profile-saved hide"></div>
         </div>
       )}
     </>
