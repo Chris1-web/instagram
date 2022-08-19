@@ -66,7 +66,7 @@ function EditProfile() {
       // upload image to cloud storage
       const filePath = `${auth.currentUser.uid}/${file.name}`;
       const newImageRef = ref(storage, filePath);
-      const fileSnapshot = await uploadBytesResumable(newImageRef, file);
+      await uploadBytesResumable(newImageRef, file);
 
       // Generate a public URL for the file.
       const publicImageUrl = await getDownloadURL(newImageRef);
@@ -81,7 +81,7 @@ function EditProfile() {
       showLoader();
       // CONTINUE HERE
     } catch (error) {
-      console.log(error.message);
+      showProfileUpdateDiv("There has been a problem. Please, try again!");
     }
   }
 
