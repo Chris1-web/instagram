@@ -17,6 +17,8 @@
 .top-section img {
   width: 15rem;
   height: auto;
+  border: 0.2rem solid var(--color-dark-grey);
+  border-radius: 50%;
 }
 
 .top-section .right {
