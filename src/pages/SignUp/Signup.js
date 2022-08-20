@@ -100,7 +100,7 @@ function Signup() {
     };
   }, [loading]);
 
-  // if loading is false and use is online, change to home page
+  // if loading is false and user is online, change to home page
   useEffect(() => {
     !loading && isOnline && history("/");
   }, [loading]);
@@ -168,6 +168,7 @@ function Signup() {
     showPassword ? setShowPassword(false) : setShowPassword(true);
   }
 
+  // check if username is taken already
   async function checkUsername(username) {
     const errorMessage = document.querySelector(".error-message");
     const usernamesuccessIcon = document.querySelector(
@@ -186,22 +187,6 @@ function Signup() {
         usernamefailureIcon.classList.add("hide");
         usernamesuccessIcon.classList.remove("hide");
       }
-      // const account = query(
-      //   collection(db, "users"),
-      //   where("username", "==", username)
-      // );
-
-      // const querySnapshot = await getDocs(account);
-      // querySnapshot.forEach((user) => {
-      //   if (user.data()) {
-      //     setButtonStatus(true);
-      //     usernamefailureIcon.classList.remove("hide");
-      //     usernamesuccessIcon.classList.add("hide");
-      //   } else {
-      //     usernamefailureIcon.classList.add("hide");
-      //     usernamesuccessIcon.classList.remove("hide");
-      //   }
-      // });
     } catch (error) {
       errorMessage.textContent = "error, please try again";
     }
@@ -225,15 +210,6 @@ function Signup() {
       // after account creation, sign in user
       await signInWithEmailAndPassword(auth, email, password);
       // create profile document in users collection
-      // await setDoc(doc(db, "users", user.uid), {
-      //   userId: user.uid,
-      //   following: [],
-      //   followers: [],
-      //   website: "",
-      //   bio: "",
-      //   fullName,
-      //   username,
-      // });
       await setDoc(doc(db, "users", user.displayName), {
         userId: user.uid,
         following: [],
