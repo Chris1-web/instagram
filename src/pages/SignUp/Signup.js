@@ -20,6 +20,7 @@ import useUserStatus from "../../Hooks/useUserStatus";
 import {
   setDoc,
   doc,
+  getDoc,
   getDocs,
   collection,
   where,
@@ -176,22 +177,31 @@ function Signup() {
       ".username-failure-icon"
     );
     try {
-      const account = query(
-        collection(db, "users"),
-        where("username", "==", username)
-      );
+      const docRef = doc(db, "users", username);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        usernamefailureIcon.classList.remove("hide");
+        usernamesuccessIcon.classList.add("hide");
+      } else {
+        usernamefailureIcon.classList.add("hide");
+        usernamesuccessIcon.classList.remove("hide");
+      }
+      // const account = query(
+      //   collection(db, "users"),
+      //   where("username", "==", username)
+      // );
 
-      const querySnapshot = await getDocs(account);
-      querySnapshot.forEach((user) => {
-        if (user.data()) {
-          setButtonStatus(true);
-          usernamefailureIcon.classList.remove("hide");
-          usernamesuccessIcon.classList.add("hide");
-        } else {
-          usernamefailureIcon.classList.add("hide");
-          usernamesuccessIcon.classList.remove("hide");
-        }
-      });
+      // const querySnapshot = await getDocs(account);
+      // querySnapshot.forEach((user) => {
+      //   if (user.data()) {
+      //     setButtonStatus(true);
+      //     usernamefailureIcon.classList.remove("hide");
+      //     usernamesuccessIcon.classList.add("hide");
+      //   } else {
+      //     usernamefailureIcon.classList.add("hide");
+      //     usernamesuccessIcon.classList.remove("hide");
+      //   }
+      // });
     } catch (error) {
       errorMessage.textContent = "error, please try again";
     }
@@ -215,14 +225,24 @@ function Signup() {
       // after account creation, sign in user
       await signInWithEmailAndPassword(auth, email, password);
       // create profile document in users collection
-      await setDoc(doc(db, "users", user.uid), {
+      // await setDoc(doc(db, "users", user.uid), {
+      //   userId: user.uid,
+      //   following: [],
+      //   followers: [],
+      //   website: "",
+      //   bio: "",
+      //   fullName,
+      //   username,
+      // });
+      await setDoc(doc(db, "users", user.displayName), {
         userId: user.uid,
         following: [],
         followers: [],
         website: "",
         bio: "",
-        fullName,
-        username,
+        fullName: fullName.trim(),
+        username: username.trim(),
+        photoURL: null,
       });
       // if sign up is successful, redirect to home page
       history("/");

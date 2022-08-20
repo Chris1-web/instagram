@@ -10,6 +10,7 @@ import useProfileInfo from "../../Hooks/useProfileInfo";
 
 function Profile() {
   const { loading, profileInfo, profileUser } = useProfileInfo(
+    auth.currentUser.displayName,
     auth.currentUser
   ); //custom hooks to get user database data
 

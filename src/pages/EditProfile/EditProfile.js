@@ -8,12 +8,13 @@ import "./EditProfile.css";
 // firebase
 import { auth, storage, db } from "../../Firebase/Firebase-init";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { updateDoc, getDoc, doc } from "firebase/firestore";
+import { updateDoc, doc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import useProfileInfo from "../../Hooks/useProfileInfo";
 
 function EditProfile() {
   const { loading, profileInfo, profileUser } = useProfileInfo(
+    auth.currentUser.displayName,
     auth.currentUser
   ); //custom hook
   const [buttonStatus, setButtonStatus] = useState(true);
@@ -24,6 +25,7 @@ function EditProfile() {
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
 
+  // fill in states when loading is done
   useEffect(() => {
     if (!loading) {
       setUsername(profileUser.displayName);
@@ -34,18 +36,6 @@ function EditProfile() {
       setBio(profileInfo.bio);
     }
   }, [loading]);
-
-  // file picker event listener
-  useEffect(() => {
-    const profileImagePicker = document.querySelector(".profilePicturePicker");
-    function getImage(event) {
-      const file = event.target.files[0];
-      saveProfileImage(file);
-      console.log(file);
-    }
-    profileImagePicker?.addEventListener("change", getImage);
-    return () => profileImagePicker?.removeEventListener("change", getImage);
-  }, []);
 
   function editUserProfile(e) {
     e.preventDefault();
@@ -59,23 +49,27 @@ function EditProfile() {
     profileImagePicker.click();
   }
 
-  async function saveProfileImage(file) {
+  async function saveProfileImage(event) {
+    const file = event.target.files[0];
     try {
+      // get user from database
+      const userInfo = doc(db, "users", profileUser.displayName);
       // show loader on image
       showLoader();
       // upload image to cloud storage
       const filePath = `${auth.currentUser.uid}/${file.name}`;
       const newImageRef = ref(storage, filePath);
       await uploadBytesResumable(newImageRef, file);
-
       // Generate a public URL for the file.
       const publicImageUrl = await getDownloadURL(newImageRef);
-
-      // update user profile picture
+      // update user profile picture in default firebase
       await updateProfile(auth.currentUser, {
         photoURL: publicImageUrl,
       });
-
+      // update user profile picture in firestore firebase
+      await updateDoc(userInfo, {
+        photoURL: publicImageUrl,
+      });
       showProfileUpdateDiv("Profile photo updated.");
       // hide loader on image
       showLoader();
@@ -94,7 +88,7 @@ function EditProfile() {
   // else if any of the default firebase user data is changed, update profile is called
   async function updateProfileInfo() {
     try {
-      const userInfo = doc(db, "users", profileUser.uid);
+      const userInfo = doc(db, "users", profileUser.displayName);
       if (
         fullName !== profileInfo.fullName ||
         website !== profileInfo.website ||
@@ -106,6 +100,9 @@ function EditProfile() {
           bio: bio.trim(),
         });
       } else if (email !== profileUser.email) {
+        await updateDoc(userInfo, {
+          email: email.trim(),
+        });
         await updateProfile(auth.currentUser, {
           email: email.trim(),
         });
@@ -151,6 +148,7 @@ function EditProfile() {
       {loading && <Loader />}
       {!loading && username && (
         <div className="edit-profile-screen">
+          {console.log()}
           <Form handleSubmit={editUserProfile}>
             <div className="profile">
               <div className="picture-name-and-link">
@@ -160,18 +158,19 @@ function EditProfile() {
                   onClick={(e) => changeProfilePicture(e)}
                 />
                 {/* loader */}
-                <span class="loader hide"></span>
+                <span className="loader hide"></span>
                 {/* loader */}
                 <div>
                   <span>{username}</span>
                   <button onClick={changeProfilePicture}>
                     Change profile photo
                   </button>
-                  {/* hidden file picker to be called on change profile photo click */}
+                  {/* hidden file picker to be called on change profile picture click */}
                   <input
                     type="file"
                     className="profilePicturePicker"
                     accept="image/png, image/jpeg"
+                    onChange={saveProfileImage}
                   />
                 </div>
               </div>
