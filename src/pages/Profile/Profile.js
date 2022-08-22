@@ -4,7 +4,7 @@ import {
   SettingsOutline,
   BookmarkOutline,
   AppsOutline,
-  PersonOutline,
+  CheckmarkDoneOutline,
 } from "react-ionicons";
 import user from "../../image/user.png";
 import "./Profile.css";
@@ -79,11 +79,7 @@ function Profile() {
 
   // determine if follow or unfollow button should be displayed when component mounts
   useEffect(() => {
-    if (showFollow) {
-      checkFollow();
-    } else {
-      showFollow(false);
-    }
+    checkFollow();
   }, []);
 
   return (
@@ -176,7 +172,7 @@ function Profile() {
                 <div className="right">
                   <div className="top">
                     <h3>{profileInfo.username}</h3>
-                    <button>Message</button>
+                    <button className="message">Message</button>
                     {!showFollow ? (
                       <button
                         className="follow-btn"
@@ -191,10 +187,10 @@ function Profile() {
                         disabled={buttonStatus}
                         onClick={unFollowProfile}
                       >
-                        <PersonOutline
+                        <CheckmarkDoneOutline
                           color={"#00000"}
-                          height="18px"
-                          width="18px"
+                          height="15px"
+                          width="15px"
                         />
                       </button>
                     )}

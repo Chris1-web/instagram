@@ -30,11 +30,12 @@
 .top-section .right .top {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  justify-content: center;
+  gap: 2rem;
 }
 
 .top-section .right .top h3 {
-  font-size: 2.5rem;
+  font-size: 3rem;
 }
 
 .top-section .right .top button {
@@ -42,7 +43,8 @@
   padding: 0.5rem 1rem;
   border: 0.2rem solid var(--color-dark-grey);
   background-color: transparent;
-  border-radius: 0.3rem;
+  border-radius: 0.5rem;
+  font-size: 1.5rem;
 }
 
 .top-section .right .top button.follow-btn {
@@ -57,12 +59,16 @@
 .top-section .right .top button.unfollow-btn {
   display: flex;
   align-items: center;
-  padding: 0.5rem 3rem;
+  padding: 0.4rem 3rem;
+}
+
+.top-section .right .top button.follow-btn:disabled {
+  background-color: var(--color-light-blue);
 }
 
 .top-section .right .middle {
   display: flex;
-  gap: 1rem;
+  gap: 2.5rem;
 }
 
 .top-section .right .middle span {
@@ -74,7 +80,7 @@
 }
 
 .top-section .right .bottom {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
 }
 
 .top-section .right .bottom p:first-child {
@@ -113,4 +119,8 @@ a {
 
 button:disabled {
   cursor: auto;
+}
+
+button.message {
+  font-weight: bold;
 }
