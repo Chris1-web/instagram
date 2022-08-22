@@ -148,7 +148,6 @@ function EditProfile() {
       {loading && <Loader />}
       {!loading && username && (
         <div className="edit-profile-screen">
-          {console.log()}
           <Form handleSubmit={editUserProfile}>
             <div className="profile">
               <div className="picture-name-and-link">

@@ -7,6 +7,8 @@ import {
   HeartOutline,
   BookmarkOutline,
   SettingsOutline,
+  ImagesOutline,
+  CloseOutline,
 } from "react-ionicons";
 import Loader from "../Loader/Loader";
 import "./Navbar.css";
@@ -20,6 +22,7 @@ import { auth } from "../../Firebase/Firebase-init";
 function Navbar() {
   const { isOnline, loading } = useUserStatus(); //custom hook
   const [currentUser, setCurrentUser] = useState(null);
+  const [addNewPost, setAddNewPost] = useState(false);
   let history = useNavigate();
 
   // if user is not online route back to login
@@ -41,6 +44,16 @@ function Navbar() {
   function hideDropdown() {
     const dropdown = document.querySelector(".dropdown");
     dropdown.classList.add("hide");
+  }
+
+  function showAddNewPost() {
+    setAddNewPost(true);
+    hideDropdown();
+  }
+
+  function closeAddNewPost() {
+    setAddNewPost(false);
+    hideDropdown();
   }
 
   return (
@@ -70,14 +83,14 @@ function Navbar() {
                   class="icon"
                 />
               </Link>
-              <Link to="/" onClick={hideDropdown}>
+              <button className="add-post-button" onClick={showAddNewPost}>
                 <AddCircleOutline
                   color={"#00000"}
                   height="30px"
                   width="30px"
                   class="icon"
                 />
-              </Link>
+              </button>
               <Link to="/" onClick={hideDropdown}>
                 <HeartOutline
                   color={"#00000"}
@@ -133,6 +146,30 @@ function Navbar() {
               </div>
             </div>
           </nav>
+          {/* add new post model */}
+          {addNewPost && (
+            <div className="add-new-post">
+              <div className="background-overlay" onClick={closeAddNewPost}>
+                <button className="close-modal-btn" onClick={closeAddNewPost}>
+                  <CloseOutline color={"#fff"} height="30px" width="30px" />
+                </button>
+              </div>
+              <div className="add-new-post-container">
+                <h3>Create new post</h3>
+                <div className="below">
+                  <ImagesOutline color={"#00000"} height="80px" width="80px" />
+                  {/* hidden file picker to be called when select from computer button is clicked */}
+                  <input
+                    type="file"
+                    id="post-file"
+                    name="post-file"
+                    accept="image/png, image/jpeg"
+                  />
+                  <button>Select From Computer</button>
+                </div>
+              </div>
+            </div>
+          )}
           <Outlet />
         </>
       )}

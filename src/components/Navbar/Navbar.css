@@ -94,7 +94,79 @@ nav .profile-container .dropdown li button {
   cursor: pointer;
 }
 
+nav button.add-post-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
 /* forceful hide */
 .dropdown.hide {
   display: none !important;
+}
+
+/* add a new post container */
+div.add-new-post {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+div.background-overlay {
+  background-color: var(--color-light-grey);
+  width: 100%;
+  height: 100%;
+}
+
+div.add-new-post-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--color-white);
+  width: 40%;
+  height: 80%;
+  border-radius: 2rem;
+}
+
+div.add-new-post-container h3 {
+  text-align: center;
+  font-size: 1.8rem;
+  padding: 1rem 0;
+  border-bottom: 0.2rem solid var(--color-dark-grey);
+}
+
+div.add-new-post-container button {
+  background-color: var(--color-dark-blue);
+  padding: 0.7rem 2rem;
+  color: var(--color-white);
+  font-weight: bold;
+  font-size: 1.4rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  border: none;
+}
+
+button.close-modal-btn {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  left: 95%;
+  top: 3%;
+  cursor: pointer;
+}
+
+div.add-new-post-container .below {
+  display: flex;
+  height: 90%;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type="file"] {
+  display: none;
 }
