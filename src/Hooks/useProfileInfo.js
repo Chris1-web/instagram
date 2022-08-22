@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // firebase
-import { getDoc, doc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { db } from "../Firebase/Firebase-init";
 
 // hook to get user information from users collection with username and current user object
@@ -12,10 +12,11 @@ function useProfileInfo(username, userObject) {
   const [profileUser, setProfileUser] = useState(null);
   useEffect(() => {
     const getUserProfile = async function () {
-      const userInfo = await getDoc(doc(db, "users", username));
-      const data = userInfo.data();
       setProfileUser(userObject);
-      setProfileInfo(data);
+      onSnapshot(doc(db, "users", username), (document) => {
+        const data = document.data();
+        setProfileInfo(data);
+      });
       setLoading(false);
     };
     getUserProfile();
