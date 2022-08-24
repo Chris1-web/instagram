@@ -131,6 +131,16 @@ div.add-new-post-container {
   border-radius: 2rem;
 }
 
+div.stage-two {
+  width: 60%;
+  height: 70%;
+}
+
+div.stage-two .top {
+  display: flex;
+  justify-content: space-between;
+}
+
 div.add-new-post-container h3 {
   text-align: center;
   font-size: 1.8rem;
@@ -169,4 +179,49 @@ div.add-new-post-container .below {
 
 input[type="file"] {
   display: none;
+}
+
+div.below-image {
+  display: flex;
+}
+
+div.below-image img.postedImage {
+  width: 100%;
+  height: 46rem;
+  border-bottom-left-radius: 1.9rem;
+}
+
+div.below-image img.postProfileImage {
+  width: 3rem;
+}
+
+div.below-image input {
+  height: 70%;
+  display: none;
+}
+
+div.below-image textarea {
+  border-bottom-right-radius: 2rem;
+  height: 100%;
+  border: none;
+  outline: none;
+  padding: 0.9rem 1rem;
+}
+
+div.stage-two .top button.share {
+  color: var(--color-dark-blue);
+  border: none;
+  background-color: transparent;
+}
+
+div.right-side {
+  width: 40%;
+}
+
+div.right-side .poster {
+  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 2rem;
 }

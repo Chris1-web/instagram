@@ -11,8 +11,10 @@ import {
   CloseOutline,
 } from "react-ionicons";
 import Loader from "../Loader/Loader";
+import Form from "../../components/Form/Form";
 import "./Navbar.css";
 import user from "../../image/user.png";
+import house from "../../image/house.jpg";
 
 // firebase
 import useUserStatus from "../../Hooks/useUserStatus";
@@ -23,6 +25,7 @@ function Navbar() {
   const { isOnline, loading } = useUserStatus(); //custom hook
   const [currentUser, setCurrentUser] = useState(null);
   const [addNewPost, setAddNewPost] = useState(false);
+  const [newStateTwo, setNewStateTwo] = useState(true);
   let history = useNavigate();
 
   // if user is not online route back to login
@@ -72,7 +75,7 @@ function Navbar() {
                   color={"#00000"}
                   height="30px"
                   width="30px"
-                  class="icon"
+                  className="icon"
                 />
               </Link>
               <Link to="/" onClick={hideDropdown}>
@@ -80,7 +83,7 @@ function Navbar() {
                   color={"#00000"}
                   height="30px"
                   width="30px"
-                  class="icon"
+                  className="icon"
                 />
               </Link>
               <button className="add-post-button" onClick={showAddNewPost}>
@@ -88,7 +91,7 @@ function Navbar() {
                   color={"#00000"}
                   height="30px"
                   width="30px"
-                  class="icon"
+                  className="icon"
                 />
               </button>
               <Link to="/" onClick={hideDropdown}>
@@ -96,7 +99,7 @@ function Navbar() {
                   color={"#00000"}
                   height="30px"
                   width="30px"
-                  class="icon"
+                  className="icon"
                 />
               </Link>
               <div className="profile-container">
@@ -123,7 +126,7 @@ function Navbar() {
                         color={"#00000"}
                         height="25px"
                         width="25px"
-                        class="icon"
+                        className="icon"
                       />
                       <span>Saved</span>
                     </Link>
@@ -134,7 +137,7 @@ function Navbar() {
                         color={"#00000"}
                         height="25px"
                         width="25px"
-                        class="icon"
+                        className="icon"
                       />
                       <span>Settings</span>
                     </Link>
@@ -166,6 +169,39 @@ function Navbar() {
                     accept="image/png, image/jpeg"
                   />
                   <button>Select From Computer</button>
+                </div>
+              </div>
+            </div>
+          )}
+          {newStateTwo && (
+            <div className="add-new-post">
+              <div className="background-overlay" onClick={closeAddNewPost}>
+                <button className="close-modal-btn" onClick={closeAddNewPost}>
+                  <CloseOutline color={"#fff"} height="30px" width="30px" />
+                </button>
+              </div>
+              <div className="add-new-post-container stage-two">
+                <div className="top">
+                  <p className="empty"></p>
+                  <h3>Create new post</h3>
+                  <button className="share">Share</button>
+                </div>
+                <div className="below-image">
+                  <img src={house} alt="house" className="postedImage" />
+                  <div className="right-side">
+                    <div className="poster">
+                      <img src={user} alt="user" className="postProfileImage" />
+                      <p>{currentUser.displayName}</p>
+                    </div>
+                    <Form>
+                      <textarea
+                        placeholder="Write a caption..."
+                        rows={26.8}
+                        cols={30}
+                      />
+                      {/* <input type="text" placeholder="Write a caption..." /> */}
+                    </Form>
+                  </div>
                 </div>
               </div>
             </div>
