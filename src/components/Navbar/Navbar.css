@@ -136,16 +136,17 @@ div.stage-two {
   height: 70%;
 }
 
-div.stage-two .top {
+div.stage-two .top,
+div.add-new-post-container .top {
   display: flex;
   justify-content: space-between;
+  border-bottom: 0.2rem solid var(--color-dark-grey);
 }
 
 div.add-new-post-container h3 {
   text-align: center;
   font-size: 1.8rem;
   padding: 1rem 0;
-  border-bottom: 0.2rem solid var(--color-dark-grey);
 }
 
 div.add-new-post-container button {
@@ -157,6 +158,11 @@ div.add-new-post-container button {
   border-radius: 0.5rem;
   cursor: pointer;
   border: none;
+}
+
+div.add-new-post-container button:disabled {
+  background-color: var(--color-light-blue);
+  cursor: auto;
 }
 
 button.close-modal-btn {
@@ -186,7 +192,7 @@ div.below-image {
 }
 
 div.below-image img.postedImage {
-  width: 100%;
+  width: 50rem;
   height: 46rem;
   border-bottom-left-radius: 1.9rem;
 }
@@ -208,7 +214,8 @@ div.below-image textarea {
   padding: 0.9rem 1rem;
 }
 
-div.stage-two .top button.share {
+div.stage-two .top button.share,
+div.add-new-post-container .top button.next {
   color: var(--color-dark-blue);
   border: none;
   background-color: transparent;
@@ -225,3 +232,30 @@ div.right-side .poster {
   gap: 1rem;
   font-size: 2rem;
 }
+
+div.add-new-post-container .below .loader {
+  position: absolute;
+  top: 70%;
+  left: 45%;
+  width: 5rem;
+  height: 5rem;
+  border: 5px solid var(--color-dark-blue);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* .loader.hide {
+  display: none;
+} */
