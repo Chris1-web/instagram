@@ -14,13 +14,20 @@ import Loader from "../Loader/Loader";
 import Form from "../../components/Form/Form";
 import "./Navbar.css";
 import user from "../../image/user.png";
+import postUploadDone from "../../image/check-IG.png";
 import house from "../../image/house.jpg";
+import Overlay from "../Overlay/Overlay";
 
 // firebase
 import useUserStatus from "../../Hooks/useUserStatus";
 import { signOut } from "firebase/auth";
 import { auth, storage } from "../../Firebase/Firebase-init";
-import { uploadBytesResumable, ref, getDownloadURL } from "firebase/storage";
+import {
+  uploadBytesResumable,
+  ref,
+  getDownloadURL,
+  deleteObject,
+} from "firebase/storage";
 
 function Navbar() {
   const { isOnline, loading } = useUserStatus(); //custom hook
@@ -28,6 +35,7 @@ function Navbar() {
   const [addNewPost, setAddNewPost] = useState(false);
   const [newStateTwo, setNewStateTwo] = useState(false);
   const [newImage, setNewImage] = useState(null);
+  const [newImageRef, setNewImageRef] = useState(null);
   const [postingLoading, setPostingLoading] = useState(false);
   const [disableSelector, setDisableSelector] = useState(false);
   let history = useNavigate();
@@ -66,12 +74,27 @@ function Navbar() {
     // if new image is not empty, delete it from storage, since it is not to be posted
     if (newImage) {
       setNewImage(null);
+      deletePostImage();
+    }
+  }
+
+  async function deletePostImage() {
+    try {
+      const imageReference = ref(storage, newImageRef);
+      await deleteObject(imageReference);
+      setNewImageRef(null);
+    } catch (e) {
+      console.log(e.message);
     }
   }
 
   function moveToStateTwo() {
     setAddNewPost(false);
     setNewStateTwo(true);
+  }
+  function moveToStateThree() {
+    setAddNewPost(false);
+    setNewStateTwo(false);
   }
 
   function selectPostImage() {
@@ -94,6 +117,7 @@ function Navbar() {
       const publicImageUrl = await getDownloadURL(newImageRef);
       // set post image in state
       setNewImage(publicImageUrl);
+      setNewImageRef(newImageRef.fullPath); //for delete files from firebase storage
       moveToStateTwo();
       // enable select from computer button
       setDisableSelector(false);
@@ -196,12 +220,7 @@ function Navbar() {
           </nav>
           {/* add new post model */}
           {addNewPost && (
-            <div className="add-new-post">
-              <div className="background-overlay" onClick={closeAddNewPost}>
-                <button className="close-modal-btn" onClick={closeAddNewPost}>
-                  <CloseOutline color={"#fff"} height="30px" width="30px" />
-                </button>
-              </div>
+            <Overlay closeAddNewPost={closeAddNewPost}>
               <div className="add-new-post-container">
                 <div className="top">
                   <p className="empty"></p>
@@ -226,20 +245,17 @@ function Navbar() {
                   </button>
                 </div>
               </div>
-            </div>
+            </Overlay>
           )}
           {newStateTwo && (
-            <div className="add-new-post">
-              <div className="background-overlay" onClick={closeAddNewPost}>
-                <button className="close-modal-btn" onClick={closeAddNewPost}>
-                  <CloseOutline color={"#fff"} height="30px" width="30px" />
-                </button>
-              </div>
+            <Overlay closeAddNewPost={closeAddNewPost}>
               <div className="add-new-post-container stage-two">
                 <div className="top">
                   <p className="empty"></p>
                   <h3>Create new post</h3>
-                  <button className="share">Share</button>
+                  <button className="share" onClick={moveToStateThree}>
+                    Share
+                  </button>
                 </div>
                 <div className="below-image">
                   <img src={newImage} alt="house" className="postedImage" />
@@ -262,7 +278,7 @@ function Navbar() {
                   </div>
                 </div>
               </div>
-            </div>
+            </Overlay>
           )}
           <Outlet />
         </>

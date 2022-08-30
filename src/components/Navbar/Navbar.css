@@ -120,7 +120,8 @@ div.background-overlay {
   height: 100%;
 }
 
-div.add-new-post-container {
+div.add-new-post-container,
+div.post-shared-container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -137,10 +138,21 @@ div.stage-two {
 }
 
 div.stage-two .top,
-div.add-new-post-container .top {
+div.add-new-post-container .top,
+div.post-shared-container .top {
   display: flex;
   justify-content: space-between;
   border-bottom: 0.2rem solid var(--color-dark-grey);
+}
+
+div.post-shared-container img {
+  width: 10rem;
+}
+
+div.post-shared-container .top {
+  justify-content: center;
+  padding: 1.5rem 0;
+  font-size: 1.5rem;
 }
 
 div.add-new-post-container h3 {
@@ -187,8 +199,17 @@ input[type="file"] {
   display: none;
 }
 
-div.below-image {
+div.below-image,
+div.post-upload-complete {
   display: flex;
+}
+
+div.post-upload-complete {
+  flex-direction: column;
+  align-items: center;
+  transform: translateY(130%);
+  gap: 1rem;
+  font-size: 1.8rem;
 }
 
 div.below-image img.postedImage {
