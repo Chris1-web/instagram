@@ -8,36 +8,39 @@ import {
   BookmarkOutline,
   SettingsOutline,
   ImagesOutline,
-  CloseOutline,
 } from "react-ionicons";
 import Loader from "../Loader/Loader";
 import Form from "../../components/Form/Form";
 import "./Navbar.css";
 import user from "../../image/user.png";
 import postUploadDone from "../../image/check-IG.png";
-import house from "../../image/house.jpg";
 import Overlay from "../Overlay/Overlay";
 
 // firebase
 import useUserStatus from "../../Hooks/useUserStatus";
 import { signOut } from "firebase/auth";
-import { auth, storage } from "../../Firebase/Firebase-init";
+import { auth, storage, db } from "../../Firebase/Firebase-init";
 import {
   uploadBytesResumable,
   ref,
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
+import { addDoc, collection } from "firebase/firestore";
 
 function Navbar() {
   const { isOnline, loading } = useUserStatus(); //custom hook
   const [currentUser, setCurrentUser] = useState(null);
   const [addNewPost, setAddNewPost] = useState(false);
   const [newStateTwo, setNewStateTwo] = useState(false);
+  const [postUploadStatus, setpostUploadStatus] = useState(false);
+  const [postUploadCompleted, setpostUploadCompleted] = useState(false);
+  const [postCaption, setPostCaption] = useState("");
   const [newImage, setNewImage] = useState(null);
   const [newImageRef, setNewImageRef] = useState(null);
   const [postingLoading, setPostingLoading] = useState(false);
   const [disableSelector, setDisableSelector] = useState(false);
+  const [disableShare, setDisableShare] = useState(false);
   let history = useNavigate();
 
   // if user is not online route back to login
@@ -67,14 +70,21 @@ function Navbar() {
   }
 
   function closeAddNewPost() {
-    setAddNewPost(false);
-    setNewStateTwo(false);
-    hideDropdown();
-    setPostingLoading(false);
-    // if new image is not empty, delete it from storage, since it is not to be posted
+    // confirm if user wants the image to be discarded and deleted
     if (newImage) {
-      setNewImage(null);
-      deletePostImage();
+      const discardPost = window.confirm(
+        "Do you want this post to be discarded"
+      );
+      if (discardPost) {
+        setAddNewPost(false);
+        setNewStateTwo(false);
+        setpostUploadStatus(false);
+        hideDropdown();
+        setNewImage(null);
+        deletePostImage();
+      } else {
+        return;
+      }
     }
   }
 
@@ -90,11 +100,14 @@ function Navbar() {
 
   function moveToStateTwo() {
     setAddNewPost(false);
+    setpostUploadStatus(false);
     setNewStateTwo(true);
   }
+
   function moveToStateThree() {
     setAddNewPost(false);
     setNewStateTwo(false);
+    setpostUploadStatus(true);
   }
 
   function selectPostImage() {
@@ -126,6 +139,37 @@ function Navbar() {
     } catch (error) {
       console.log(error.message);
     }
+  }
+
+  async function createPost() {
+    setDisableShare(true);
+    moveToStateThree();
+    try {
+      await addDoc(collection(db, "posts"), {
+        postImage: newImage,
+        caption: postCaption,
+        comments: [],
+        poster: currentUser.displayName,
+        posterProfileURL: currentUser.photoURL,
+        likes: [],
+      });
+      setpostUploadCompleted(true);
+      setNewImage(null);
+      setPostCaption("");
+      // close all overlays
+      setAddNewPost(false);
+      setNewStateTwo(false);
+      setpostUploadStatus(false);
+      hideDropdown();
+      disableShare(false);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
+  function createPostCaption(e) {
+    setPostCaption(e.target.value);
+    console.log(postCaption);
   }
 
   return (
@@ -253,7 +297,11 @@ function Navbar() {
                 <div className="top">
                   <p className="empty"></p>
                   <h3>Create new post</h3>
-                  <button className="share" onClick={moveToStateThree}>
+                  <button
+                    className="share"
+                    onClick={createPost}
+                    disabled={disableShare}
+                  >
                     Share
                   </button>
                 </div>
@@ -273,9 +321,25 @@ function Navbar() {
                         placeholder="Write a caption..."
                         rows={26.8}
                         cols={30}
+                        onChange={createPostCaption}
                       />
                     </Form>
                   </div>
+                </div>
+              </div>
+            </Overlay>
+          )}
+          {postUploadStatus && (
+            <Overlay closeAddNewPost={closeAddNewPost}>
+              <div className="add-new-post-loading-container">
+                <div className="top">
+                  <h3>Sharing</h3>
+                </div>
+                <div className="below">
+                  {postUploadCompleted && (
+                    <img src={postUploadDone} alt="post upload is completed" />
+                  )}
+                  <p>Your post has been shared.</p>
                 </div>
               </div>
             </Overlay>

@@ -121,7 +121,7 @@ div.background-overlay {
 }
 
 div.add-new-post-container,
-div.post-shared-container {
+div.add-new-post-loading-container {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -139,25 +139,42 @@ div.stage-two {
 
 div.stage-two .top,
 div.add-new-post-container .top,
-div.post-shared-container .top {
+div.add-new-post-loading-container .top {
   display: flex;
   justify-content: space-between;
   border-bottom: 0.2rem solid var(--color-dark-grey);
 }
 
-div.post-shared-container img {
-  width: 10rem;
-}
-
-div.post-shared-container .top {
+div.add-new-post-loading-container .top {
   justify-content: center;
   padding: 1.5rem 0;
   font-size: 1.5rem;
 }
 
-div.add-new-post-container h3 {
+div.add-new-post-loading-container div.ig-loading-circle {
+  width: 10rem;
+  height: 10rem;
+  background-color: none;
+  border: 0.6rem solid rgb(223, 30, 160);
+  border-radius: 50%;
+}
+
+div.add-new-post-loading-container img {
+  width: 10rem;
+}
+
+div.add-new-post-loading-container .below {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80%;
+}
+
+div.add-new-post-container h3,
+div.add-new-post-loading-container p {
   text-align: center;
-  font-size: 1.8rem;
+  font-size: 2rem;
   padding: 1rem 0;
 }
 
