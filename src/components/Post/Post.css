@@ -63,3 +63,7 @@ article.post-box {
 .post-box .poster-name {
   font-weight: bold;
 }
+
+a {
+  text-decoration: none;
+}

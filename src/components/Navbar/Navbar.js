@@ -15,6 +15,7 @@ import "./Navbar.css";
 import user from "../../image/user.png";
 import postUploadDone from "../../image/check-IG.png";
 import Overlay from "../Overlay/Overlay";
+import uniqid from "uniqid";
 
 // firebase
 import useUserStatus from "../../Hooks/useUserStatus";
@@ -161,6 +162,7 @@ function Navbar() {
         createAt: `${createdDate.getDate()}/${
           createdDate.getMonth() + 1
         }/${createdDate.getFullYear()}`,
+        postId: uniqid(),
       });
       setPostingLoading(false);
       setNewImage(null);

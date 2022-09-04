@@ -1,35 +1,50 @@
-import { signOut } from "firebase/auth";
-import { auth } from "../../Firebase/Firebase-init";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import uniqid from "uniqid";
 import "./Home.css";
 
 import user from "../../image/user.png";
-import house from "../../image/house.jpg";
 import Post from "../../components/Post/Post";
 
-function Home() {
-  let history = useNavigate();
+// firestore
+import { collection, query, where, onSnapshot } from "firebase/firestore";
+import { db } from "../../Firebase/Firebase-init";
 
-  async function signOutUser() {
-    await signOut(auth);
-    history("/login");
+function Home() {
+  const [posts, setPosts] = useState(null);
+
+  async function getPosts() {
+    const allPosts = query(collection(db, "posts"));
+    onSnapshot(allPosts, (documents) => {
+      const cities = [];
+      documents.forEach((doc) => {
+        cities.push(doc.data());
+        setPosts(cities);
+      });
+    });
   }
+
+  useEffect(() => {
+    getPosts();
+  }, []);
 
   return (
     <div className="home-page">
       <div>
         <main className="home">
-          {/* <div className="home-loader"></div> */}
-          <Post
-            posterPicture={user}
-            posterUsername={auth.currentUser.displayName}
-            postPicture={house}
-            altText={auth.currentUser.displayName}
-            caption="This is my first post"
-          />
-          <h1>Welcome Home {auth.currentUser.displayName} </h1>
-          <button onClick={signOutUser}>Hello World</button>
+          {!posts && <div className="home-loader"></div>}
+          {posts?.map((post) => {
+            return (
+              <Post
+                key={uniqid()}
+                posterPicture={post.posterProfileURL ?? user}
+                posterUsername={post.poster}
+                postPicture={post.postImage}
+                altText={post.poster}
+                caption={post.caption}
+              />
+            );
+          })}
+          {posts && console.log(posts)}
         </main>
       </div>
     </div>
