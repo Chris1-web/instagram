@@ -34,7 +34,6 @@ function Navbar() {
   const [addNewPost, setAddNewPost] = useState(false);
   const [newStateTwo, setNewStateTwo] = useState(false);
   const [postUploadStatus, setpostUploadStatus] = useState(false);
-  const [postUploadCompleted, setpostUploadCompleted] = useState(false);
   const [postCaption, setPostCaption] = useState("");
   const [newImage, setNewImage] = useState(null);
   const [newImageRef, setNewImageRef] = useState(null);
@@ -85,6 +84,11 @@ function Navbar() {
       } else {
         return;
       }
+    } else {
+      setAddNewPost(false);
+      setNewStateTwo(false);
+      setpostUploadStatus(false);
+      hideDropdown();
     }
   }
 
@@ -142,6 +146,7 @@ function Navbar() {
   }
 
   async function createPost() {
+    const createdDate = new Date();
     setDisableShare(true);
     moveToStateThree();
     try {
@@ -152,8 +157,12 @@ function Navbar() {
         poster: currentUser.displayName,
         posterProfileURL: currentUser.photoURL,
         likes: [],
+        saved: [],
+        createAt: `${createdDate.getDate()}/${
+          createdDate.getMonth() + 1
+        }/${createdDate.getFullYear()}`,
       });
-      setpostUploadCompleted(true);
+      setPostingLoading(false);
       setNewImage(null);
       setPostCaption("");
       // close all overlays
@@ -161,7 +170,7 @@ function Navbar() {
       setNewStateTwo(false);
       setpostUploadStatus(false);
       hideDropdown();
-      disableShare(false);
+      setDisableShare(false);
     } catch (error) {
       console.log(error.message);
     }
@@ -336,9 +345,7 @@ function Navbar() {
                   <h3>Sharing</h3>
                 </div>
                 <div className="below">
-                  {postUploadCompleted && (
-                    <img src={postUploadDone} alt="post upload is completed" />
-                  )}
+                  <img src={postUploadDone} alt="post upload is completed" />
                   <p>Your post has been shared.</p>
                 </div>
               </div>

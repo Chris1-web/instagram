@@ -20,6 +20,7 @@ function Home() {
     <div className="home-page">
       <div>
         <main className="home">
+          {/* <div className="home-loader"></div> */}
           <Post
             posterPicture={user}
             posterUsername={auth.currentUser.displayName}

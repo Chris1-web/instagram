@@ -2,3 +2,15 @@ main.home {
   background-color: var(--color-grey);
   padding: 2rem 25rem;
 }
+
+.home-loader {
+  display: flex;
+  max-width: 5rem;
+  height: 5rem;
+  border: 5px solid var(--color-dark-blue);
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  animation: rotation 1s linear infinite;
+  align-items: center;
+  margin-left: 48%;
+}
