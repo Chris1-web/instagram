@@ -27,7 +27,7 @@ function EditProfile() {
 
   // fill in states when loading is done
   useEffect(() => {
-    if (!loading) {
+    if (!loading && profileInfo) {
       setUsername(profileUser.displayName);
       setProfilePicture(profileUser.photoURL);
       setFullName(profileInfo.fullName);
@@ -35,7 +35,7 @@ function EditProfile() {
       setEmail(profileUser.email);
       setBio(profileInfo.bio);
     }
-  }, [loading]);
+  }, [loading, profileInfo]);
 
   function editUserProfile(e) {
     e.preventDefault();

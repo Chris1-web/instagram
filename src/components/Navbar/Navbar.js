@@ -180,7 +180,6 @@ function Navbar() {
 
   function createPostCaption(e) {
     setPostCaption(e.target.value);
-    console.log(postCaption);
   }
 
   return (

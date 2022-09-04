@@ -91,7 +91,6 @@ function Profile() {
         profileInfo &&
         profileInfo.userId === auth.currentUser.uid && (
           <div className="profile-section">
-            {console.log(profileUser)}
             <>
               <div className="top-section">
                 <img
@@ -124,8 +123,8 @@ function Profile() {
                     </p>
                   </div>
                   <div className="bottom">
-                    <p>full name</p>
-                    <p>Full stack web app developer. Bball</p>
+                    <p>{profileInfo.fullName}</p>
+                    <p>{profileInfo.bio}</p>
                   </div>
                 </div>
               </div>

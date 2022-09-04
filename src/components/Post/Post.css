@@ -8,7 +8,7 @@ article.post-box {
   border-radius: 1rem;
   align-items: flex-start;
   justify-content: flex-start;
-  height: 60rem;
+  height: 65rem;
   background-color: var(--color-white);
 }
 
@@ -44,11 +44,27 @@ article.post-box {
   text-decoration: none;
 }
 
-.post-box .icons {
+.post-box .icons,
+.post-box .number-of-likes,
+.post-box .date-of-creation {
   display: flex;
   align-items: center;
   gap: 1.3rem;
-  padding: 0.1rem 1rem;
+  padding: 0.04rem 1rem;
+  cursor: pointer;
+}
+
+.post-box .number-of-likes {
+  font-weight: bold;
+  font-size: 1.9rem;
+  cursor: auto;
+}
+
+.post-box .date-of-creation {
+  color: var(--color-light-grey);
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: auto;
 }
 
 .post-box .icons img {
