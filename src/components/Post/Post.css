@@ -26,6 +26,7 @@ article.post-box {
   border: none;
   padding: none;
   border-radius: 0;
+  background-color: var(--color-black);
 }
 
 .post-box header {
@@ -45,19 +46,28 @@ article.post-box {
 
 .post-box .icons {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: 1.3rem;
   padding: 0.1rem 1rem;
+}
+
+.post-box .icons img {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+}
+
+.post-box .icons img.comment {
+  width: auto;
+  height: 2.7rem;
 }
 
 .post-box .picture-caption {
   display: flex;
+  align-items: center;
   gap: 1rem;
-  font-size: 1.2rem;
+  font-size: 1.9rem;
   padding: 0.5rem 1rem;
-}
-
-.post-box .picture-caption span:first-child {
-  font-weight: bold;
 }
 
 .post-box .poster-name {
