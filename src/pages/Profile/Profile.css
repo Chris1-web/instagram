@@ -124,3 +124,11 @@ button:disabled {
 button.message {
   font-weight: bold;
 }
+
+.profile-section .bottom-section .posts img,
+.profile-section .bottom-section .saved img {
+  width: 29.2rem;
+  height: 29.2rem;
+  background-color: var(--color-black);
+  padding: 1rem 2rem;
+}

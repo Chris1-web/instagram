@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import uniqid from "uniqid";
 import "./Home.css";
 
 import user from "../../image/user.png";
@@ -128,7 +127,6 @@ function Home() {
               />
             );
           })}
-          {posts && console.log(posts)}
         </main>
       </div>
     </div>

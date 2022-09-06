@@ -19,6 +19,10 @@ import {
   updateDoc,
   arrayUnion,
   arrayRemove,
+  query,
+  collection,
+  where,
+  onSnapshot,
 } from "firebase/firestore";
 
 function Profile() {
@@ -29,6 +33,10 @@ function Profile() {
   ); //custom hooks to get user database data
   const [showFollow, setShowFollow] = useState(true);
   const [buttonStatus, setButtonStatus] = useState(false);
+  const [profilePosts, setProfilePosts] = useState(null);
+  const [savedPosts, setSavedPosts] = useState(null);
+  const [showPost, setShowPost] = useState(true);
+  const [showSaved, setShowSaved] = useState(false);
 
   let history = useNavigate();
 
@@ -77,9 +85,39 @@ function Profile() {
     setShowFollow(followStatus);
   }
 
+  async function getProfilePosts() {
+    const profilePosts = query(
+      collection(db, "posts"),
+      where("poster", "==", displayName)
+    );
+    onSnapshot(profilePosts, (querySnapshot) => {
+      const postDocs = [];
+      querySnapshot.forEach((doc) => {
+        postDocs.push(doc.data());
+        setProfilePosts(postDocs);
+      });
+    });
+  }
+
+  async function getSavedPosts() {
+    const savedPosts = query(
+      collection(db, "posts"),
+      where("saved", "array-contains", displayName)
+    );
+    onSnapshot(savedPosts, (querySnapshot) => {
+      const postDocs = [];
+      querySnapshot.forEach((doc) => {
+        postDocs.push(doc.data());
+        setSavedPosts(postDocs);
+      });
+    });
+  }
+
   // determine if follow or unfollow button should be displayed when component mounts
   useEffect(() => {
     checkFollow();
+    getProfilePosts();
+    getSavedPosts();
   }, []);
 
   return (
@@ -150,8 +188,23 @@ function Profile() {
                   </li>
                 </ul>
                 <ul className="posts">
-                  <p>This contains all the person's posts</p>
+                  {profilePosts?.map((post) => (
+                    <img
+                      src={post.postImage}
+                      alt={post.poster}
+                      key={post.postId}
+                    />
+                  ))}
                 </ul>
+                {/* <ul className="saved">
+                  {savedPosts?.map((post) => (
+                    <img
+                      src={post.postImage}
+                      alt={post.poster}
+                      key={post.postId}
+                    />
+                  ))}
+                </ul> */}
               </div>
             </>
           </div>
