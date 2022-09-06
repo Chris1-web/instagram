@@ -55,6 +55,38 @@ function Home() {
     });
   }
 
+  async function bookmarkPost(postId) {
+    let id;
+    const selectedPost = query(
+      collection(db, "posts"),
+      where("postId", "==", postId)
+    );
+    const postSnapshot = await getDocs(selectedPost);
+    postSnapshot.forEach((doc) => {
+      id = doc.id;
+    });
+    const postReference = doc(db, "posts", id);
+    await updateDoc(postReference, {
+      saved: arrayUnion(auth.currentUser.displayName),
+    });
+  }
+
+  async function unbookmarkPost(postId) {
+    let id;
+    const selectedPost = query(
+      collection(db, "posts"),
+      where("postId", "==", postId)
+    );
+    const postSnapshot = await getDocs(selectedPost);
+    postSnapshot.forEach((doc) => {
+      id = doc.id;
+    });
+    const postReference = doc(db, "posts", id);
+    await updateDoc(postReference, {
+      saved: arrayRemove(auth.currentUser.displayName),
+    });
+  }
+
   // async function checkPostLike() {}
 
   useEffect(() => {
@@ -90,6 +122,9 @@ function Home() {
                 likePost={likePost}
                 unlikePost={unlikePost}
                 date={post.createAt}
+                bookmark={post.saved}
+                bookmarkPost={bookmarkPost}
+                unbookmarkPost={unbookmarkPost}
               />
             );
           })}
