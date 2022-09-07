@@ -196,21 +196,25 @@ function Profile() {
                 <ul className="posts">
                   {showPost &&
                     profilePosts?.map((post) => (
-                      <img
-                        src={post.postImage}
-                        alt={post.poster}
-                        key={post.postId}
-                      />
+                      <Link to={"/post/" + post.postId} key={post.postId}>
+                        <img
+                          src={post.postImage}
+                          alt={post.poster}
+                          key={post.postId}
+                        />
+                      </Link>
                     ))}
                 </ul>
                 <ul className="saved">
                   {!showPost &&
                     savedPosts?.map((post) => (
-                      <img
-                        src={post.postImage}
-                        alt={post.poster}
-                        key={post.postId}
-                      />
+                      <Link to={"/post/" + post.postId} key={post.postId}>
+                        <img
+                          src={post.postImage}
+                          alt={post.poster}
+                          key={post.postId}
+                        />
+                      </Link>
                     ))}
                 </ul>
               </div>
@@ -286,11 +290,9 @@ function Profile() {
                 </ul>
                 <ul className="posts">
                   {profilePosts?.map((post) => (
-                    <img
-                      src={post.postImage}
-                      alt={post.poster}
-                      key={post.postId}
-                    />
+                    <Link to={"post/" + post.postId} key={post.postId}>
+                      <img src={post.postImage} alt={post.poster} />
+                    </Link>
                   ))}
                 </ul>
               </div>

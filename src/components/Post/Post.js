@@ -56,7 +56,7 @@ function Post(props) {
               onClick={() => props.unlikePost(props.postId)}
             />
           )}
-          <Link to={"post/" + props.postId}>
+          <Link to={"/post/" + props.postId}>
             <img src={Comment} className="comment" alt="comment" />
           </Link>
         </div>
@@ -85,7 +85,7 @@ function Post(props) {
         <span>{props.caption}</span>
       </p>
       <p className="view-comments">
-        <Link to={"post/" + props.postId}>View all comments</Link>
+        <Link to={"/post/" + props.postId}>View all comments</Link>
       </p>
       <div className="date-of-creation">{props.date}</div>
       {/* comment component */}

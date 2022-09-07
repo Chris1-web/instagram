@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import Overlay from "../../components/Overlay/Overlay";
 import house from "../../image/house.jpg";
 import user from "../../image/user.png";
@@ -189,11 +189,15 @@ function PostDetail() {
                     {post.comments.map((indiePost, index) => {
                       return (
                         <div key={index}>
-                          <img
-                            src={indiePost.photo ?? user}
-                            alt={indiePost.author}
-                          />
-                          <p className="author-name">{indiePost.author}</p>
+                          <Link to={"/" + indiePost.author}>
+                            <img
+                              src={indiePost.photo ?? user}
+                              alt={indiePost.author}
+                            />
+                          </Link>
+                          <Link to={"/" + indiePost.author}>
+                            <p className="author-name">{indiePost.author}</p>
+                          </Link>
                           <p className="author-comment">{indiePost.comment}</p>
                         </div>
                       );
