@@ -9,6 +9,8 @@ import {
 import user from "../../image/user.png";
 import "./Profile.css";
 import Loader from "../../components/Loader/Loader";
+import Comment from "../../image/comment.png";
+import Love from "../../image/love.png";
 
 // firebase
 import { auth, db } from "../../Firebase/Firebase-init";
@@ -36,7 +38,6 @@ function Profile() {
   const [profilePosts, setProfilePosts] = useState(null);
   const [savedPosts, setSavedPosts] = useState(null);
   const [showPost, setShowPost] = useState(true);
-  // const [showSaved, setShowSaved] = useState(false);
 
   let history = useNavigate();
 
@@ -139,7 +140,6 @@ function Profile() {
                   <div className="top">
                     <h3>{profileUser.displayName}</h3>
                     <button onClick={editProfile}>Edit Profile</button>
-                    {/* <button className="follow-btn">Follow</button> */}
                     <Link to="/accounts/edit">
                       <SettingsOutline
                         color={"#00000"}
@@ -151,7 +151,7 @@ function Profile() {
                   </div>
                   <div className="middle">
                     <p>
-                      <span>0 </span>posts
+                      <span>{showPost && profilePosts.length} </span>posts
                     </p>
                     <p>
                       <span>{profileInfo.followers.length} </span>followers
@@ -261,7 +261,7 @@ function Profile() {
                   </div>
                   <div className="middle">
                     <p>
-                      <span>0 </span>posts
+                      <span>{showPost && profilePosts.length} </span>posts
                     </p>
                     <p>
                       <span>{profileInfo.followers.length} </span>followers

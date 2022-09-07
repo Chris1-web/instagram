@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import Overlay from "../../components/Overlay/Overlay";
-import house from "../../image/house.jpg";
 import user from "../../image/user.png";
 import "./PostDetail.css";
 import Form from "../../components/Form/Form";
