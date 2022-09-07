@@ -24,6 +24,7 @@ import {
   arrayUnion,
   doc,
   arrayRemove,
+  deleteDoc,
 } from "firebase/firestore";
 
 function PostDetail() {
@@ -135,6 +136,25 @@ function PostDetail() {
     });
   }
 
+  async function deletePost() {
+    try {
+      let id;
+      const selectedPost = query(
+        collection(db, "posts"),
+        where("postId", "==", postid)
+      );
+      const postSnapshot = await getDocs(selectedPost);
+      postSnapshot.forEach((doc) => {
+        id = doc.id;
+      });
+      const postReference = doc(db, "posts", id);
+      await deleteDoc(postReference);
+      history("/");
+    } catch (e) {
+      console.log(e.message);
+    }
+  }
+
   useEffect(() => {
     async function getPosts() {
       const allPosts = query(
@@ -175,7 +195,9 @@ function PostDetail() {
                       />
                       <p className="author-name">{post.poster}</p>
                     </div>
-                    <button>. . .</button>
+                    {post.poster === auth.currentUser.displayName && (
+                      <button onClick={deletePost}>delete</button>
+                    )}
                   </div>
                   <div className="middle">
                     <div>
@@ -183,7 +205,7 @@ function PostDetail() {
                         src={auth.currentUser.photoURL ?? user}
                         alt={post.caption}
                       />
-                      <p className="author-name">{post.author}</p>
+                      <p className="author-name">{post.poster}</p>
                       <p className="author-comment">{post.caption}</p>
                     </div>
                     {post.comments.map((indiePost, index) => {

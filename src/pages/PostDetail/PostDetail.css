@@ -60,6 +60,7 @@ div.post-details-containers .top button {
   background-color: transparent;
   cursor: pointer;
   font-weight: bold;
+  color: red;
 }
 
 div.post-details-containers .top img,
