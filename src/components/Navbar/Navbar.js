@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import {
   HomeOutline,
-  ChatbubbleEllipsesOutline,
   AddCircleOutline,
   BookmarkOutline,
   SettingsOutline,
@@ -12,6 +11,7 @@ import Loader from "../Loader/Loader";
 import Form from "../../components/Form/Form";
 import "./Navbar.css";
 import user from "../../image/user.png";
+import github from "../../image/github.png";
 import postUploadDone from "../../image/check-IG.png";
 import Overlay from "../Overlay/Overlay";
 import uniqid from "uniqid";
@@ -200,14 +200,14 @@ function Navbar() {
                   className="icon"
                 />
               </Link>
-              <Link to="/" onClick={hideDropdown}>
-                <ChatbubbleEllipsesOutline
-                  color={"#00000"}
-                  height="30px"
-                  width="30px"
-                  className="icon"
-                />
-              </Link>
+              <a
+                href="https://github.com/Chris1-web/instagram"
+                target="_blank"
+                rel="noreferrer"
+                onClick={hideDropdown}
+              >
+                <img src={github} alt="github logo" className="github-logo" />
+              </a>
               <button className="add-post-button" onClick={showAddNewPost}>
                 <AddCircleOutline
                   color={"#00000"}
@@ -235,7 +235,7 @@ function Navbar() {
                     </Link>
                   </li>
                   <li onClick={toggleDropdown}>
-                    <Link to="/">
+                    <Link to={"/" + currentUser.displayName}>
                       <BookmarkOutline
                         color={"#00000"}
                         height="25px"
