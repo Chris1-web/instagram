@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import ProfileImage from "../ProfileImage/ProfileImage";
 import likeOutline from "../../image/like.png";
@@ -5,12 +6,25 @@ import Love from "../../image/love.png";
 import Comment from "../../image/comment.png";
 import bookmarkOutline from "../../image/bookmark-outline.png";
 import bookmarkFill from "../../image/bookmark-fill.png";
+import Form from "../Form/Form";
+import Button from "../Button/Button";
 import "./Post.css";
 
 // firebase
 import { auth } from "../../Firebase/Firebase-init";
 
 function Post(props) {
+  const [comment, setComment] = useState("");
+
+  function getComment(e) {
+    setComment(e.target.value);
+  }
+
+  function submitPostComment(e) {
+    e.preventDefault();
+    props.submitComment(e, props.postId, comment);
+    setComment("");
+  }
   return (
     <article className="post-box">
       <header>
@@ -70,6 +84,19 @@ function Post(props) {
       </p>
       <div className="date-of-creation">{props.date}</div>
       {/* comment component */}
+      <Form handleSubmit={submitPostComment}>
+        <input
+          className="comment"
+          placeholder="Add a comment..."
+          value={comment}
+          onChange={getComment}
+        />
+        <Button
+          classname="post-comment"
+          title="Post"
+          disabled={props.disablePost}
+        />
+      </Form>
     </article>
   );
 }

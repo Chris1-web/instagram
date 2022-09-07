@@ -20,6 +20,7 @@ import { db, auth } from "../../Firebase/Firebase-init";
 
 function Home() {
   const [posts, setPosts] = useState(null);
+  const [disablePost, setDisablePost] = useState(false);
 
   async function likePost(postId) {
     let id;
@@ -86,6 +87,30 @@ function Home() {
     });
   }
 
+  async function submitComment(e, postId, comment) {
+    setDisablePost(true);
+    let commentObject = {
+      author: auth.currentUser.displayName,
+      comment,
+      photo: auth.currentUser.photoURL,
+    };
+    e.preventDefault();
+    let id;
+    const selectedPost = query(
+      collection(db, "posts"),
+      where("postId", "==", postId)
+    );
+    const postSnapshot = await getDocs(selectedPost);
+    postSnapshot.forEach((doc) => {
+      id = doc.id;
+    });
+    const postReference = doc(db, "posts", id);
+    await updateDoc(postReference, {
+      comments: arrayUnion(commentObject),
+    });
+    setDisablePost(false);
+  }
+
   // async function checkPostLike() {}
 
   useEffect(() => {
@@ -124,6 +149,8 @@ function Home() {
                 bookmark={post.saved}
                 bookmarkPost={bookmarkPost}
                 unbookmarkPost={unbookmarkPost}
+                submitComment={submitComment}
+                disablePost={disablePost}
               />
             );
           })}

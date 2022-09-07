@@ -8,7 +8,7 @@ article.post-box {
   border-radius: 1rem;
   align-items: flex-start;
   justify-content: flex-start;
-  height: 65rem;
+  height: 68rem;
   background-color: var(--color-white);
 }
 
@@ -100,6 +100,32 @@ article.post-box {
 
 .post-box .poster-name {
   font-weight: bold;
+}
+
+.post-box form {
+  position: relative;
+}
+
+.post-box input.comment {
+  width: 52.3rem;
+  height: 5rem;
+  border: none;
+  border-top: 0.1rem solid var(--color-dark-grey);
+  padding: 0 1rem;
+}
+
+.post-box button.post-comment {
+  position: absolute;
+  top: 50%;
+  transform: translate(-140%, -50%);
+  border: none;
+  color: var(--color-dark-blue);
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.post-box button.post-comment:disabled {
+  color: var(--color-light-blue);
 }
 
 a {

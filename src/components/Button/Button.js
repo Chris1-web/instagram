@@ -1,5 +1,9 @@
 function Button(props) {
-  return <button disabled={props.disabled}>{props.title}</button>;
+  return (
+    <button className={props.classname} disabled={props.disabled}>
+      {props.title}
+    </button>
+  );
 }
 
 export default Button;
