@@ -30,7 +30,6 @@
 .top-section .right .top {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 2rem;
 }
 
@@ -93,9 +92,13 @@
   gap: 2rem;
 }
 
-.bottom-section .posts {
-  max-width: 95rem;
+.bottom-section .posts,
+.bottom-section .saved {
+  max-width: 92rem;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 1rem;
 }
 
 .bottom-section .tags li {
@@ -130,5 +133,5 @@ button.message {
   width: 29.2rem;
   height: 29.2rem;
   background-color: var(--color-black);
-  padding: 1rem 2rem;
+  cursor: pointer;
 }

@@ -36,7 +36,7 @@ function Profile() {
   const [profilePosts, setProfilePosts] = useState(null);
   const [savedPosts, setSavedPosts] = useState(null);
   const [showPost, setShowPost] = useState(true);
-  const [showSaved, setShowSaved] = useState(false);
+  // const [showSaved, setShowSaved] = useState(false);
 
   let history = useNavigate();
 
@@ -168,7 +168,10 @@ function Profile() {
               </div>
               <div className="bottom-section">
                 <ul className="tags">
-                  <li className="active">
+                  <li
+                    className={showPost ? "active" : ""}
+                    onClick={() => setShowPost(true)}
+                  >
                     <AppsOutline
                       color={"#00000"}
                       height="15px"
@@ -177,7 +180,10 @@ function Profile() {
                     />
                     <span>POSTS</span>
                   </li>
-                  <li>
+                  <li
+                    className={!showPost ? "active" : ""}
+                    onClick={() => setShowPost(false)}
+                  >
                     <BookmarkOutline
                       color={"#00000"}
                       height="15px"
@@ -188,23 +194,25 @@ function Profile() {
                   </li>
                 </ul>
                 <ul className="posts">
-                  {profilePosts?.map((post) => (
-                    <img
-                      src={post.postImage}
-                      alt={post.poster}
-                      key={post.postId}
-                    />
-                  ))}
+                  {showPost &&
+                    profilePosts?.map((post) => (
+                      <img
+                        src={post.postImage}
+                        alt={post.poster}
+                        key={post.postId}
+                      />
+                    ))}
                 </ul>
-                {/* <ul className="saved">
-                  {savedPosts?.map((post) => (
-                    <img
-                      src={post.postImage}
-                      alt={post.poster}
-                      key={post.postId}
-                    />
-                  ))}
-                </ul> */}
+                <ul className="saved">
+                  {!showPost &&
+                    savedPosts?.map((post) => (
+                      <img
+                        src={post.postImage}
+                        alt={post.poster}
+                        key={post.postId}
+                      />
+                    ))}
+                </ul>
               </div>
             </>
           </div>
@@ -259,8 +267,8 @@ function Profile() {
                     </p>
                   </div>
                   <div className="bottom">
-                    <p>full name</p>
-                    <p>Full stack web app developer. Bball</p>
+                    <p>{profileInfo.fullName}</p>
+                    <p>{profileInfo.bio}</p>
                   </div>
                 </div>
               </div>
@@ -275,18 +283,15 @@ function Profile() {
                     />
                     <span>POSTS</span>
                   </li>
-                  <li>
-                    <BookmarkOutline
-                      color={"#00000"}
-                      height="15px"
-                      width="15px"
-                      class="icon"
-                    />
-                    <span>SAVED</span>
-                  </li>
                 </ul>
                 <ul className="posts">
-                  <p>This contains all the person's posts</p>
+                  {profilePosts?.map((post) => (
+                    <img
+                      src={post.postImage}
+                      alt={post.poster}
+                      key={post.postId}
+                    />
+                  ))}
                 </ul>
               </div>
             </>
