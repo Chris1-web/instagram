@@ -4,13 +4,12 @@ main.home {
 }
 
 .home-loader {
-  display: flex;
-  max-width: 5rem;
-  height: 5rem;
-  border: 5px solid var(--color-dark-blue);
-  border-bottom-color: transparent;
+  border: 1.6rem solid var(--color-light-grey);
   border-radius: 50%;
-  animation: rotation 1s linear infinite;
-  align-items: center;
-  margin-left: 48%;
+  border-top: 1.6rem solid var(--color-instagram-red);
+  width: 12rem;
+  height: 12rem;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+  margin: 0 auto;
 }

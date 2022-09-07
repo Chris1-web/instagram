@@ -56,7 +56,9 @@ function Post(props) {
               onClick={() => props.unlikePost(props.postId)}
             />
           )}
-          <img src={Comment} className="comment" alt="comment" />
+          <Link to={"post/" + props.postId}>
+            <img src={Comment} className="comment" alt="comment" />
+          </Link>
         </div>
         <div className="right">
           {!props.bookmark.includes(auth.currentUser.displayName) && (
@@ -81,6 +83,9 @@ function Post(props) {
           {props.posterUsername}
         </Link>
         <span>{props.caption}</span>
+      </p>
+      <p className="view-comments">
+        <Link to={"post/" + props.postId}>View all comments</Link>
       </p>
       <div className="date-of-creation">{props.date}</div>
       {/* comment component */}

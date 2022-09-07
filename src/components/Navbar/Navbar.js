@@ -4,7 +4,6 @@ import {
   HomeOutline,
   ChatbubbleEllipsesOutline,
   AddCircleOutline,
-  HeartOutline,
   BookmarkOutline,
   SettingsOutline,
   ImagesOutline,
@@ -217,14 +216,6 @@ function Navbar() {
                   className="icon"
                 />
               </button>
-              <Link to="/" onClick={hideDropdown}>
-                <HeartOutline
-                  color={"#00000"}
-                  height="30px"
-                  width="30px"
-                  className="icon"
-                />
-              </Link>
               <div className="profile-container">
                 <img
                   src={currentUser.photoURL ?? user}

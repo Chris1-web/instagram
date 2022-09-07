@@ -134,24 +134,25 @@ function Home() {
           {!posts && <div className="home-loader"></div>}
           {posts?.map((post) => {
             return (
-              <Post
-                key={post.postId}
-                posterPicture={post.posterProfileURL ?? user}
-                posterUsername={post.poster}
-                postPicture={post.postImage}
-                altText={post.poster}
-                caption={post.caption}
-                postId={post.postId}
-                likes={post.likes}
-                likePost={likePost}
-                unlikePost={unlikePost}
-                date={post.createAt}
-                bookmark={post.saved}
-                bookmarkPost={bookmarkPost}
-                unbookmarkPost={unbookmarkPost}
-                submitComment={submitComment}
-                disablePost={disablePost}
-              />
+              <div key={post.postId}>
+                <Post
+                  posterPicture={post.posterProfileURL ?? user}
+                  posterUsername={post.poster}
+                  postPicture={post.postImage}
+                  altText={post.caption}
+                  caption={post.caption}
+                  postId={post.postId}
+                  likes={post.likes}
+                  likePost={likePost}
+                  unlikePost={unlikePost}
+                  date={post.createAt}
+                  bookmark={post.saved}
+                  bookmarkPost={bookmarkPost}
+                  unbookmarkPost={unbookmarkPost}
+                  submitComment={submitComment}
+                  disablePost={disablePost}
+                />
+              </div>
             );
           })}
         </main>
