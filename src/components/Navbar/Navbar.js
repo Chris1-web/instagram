@@ -10,8 +10,8 @@ import {
 import Loader from "../Loader/Loader";
 import Form from "../../components/Form/Form";
 import "./Navbar.css";
-import user from "../../image/user.png";
-import github from "../../image/github.png";
+import user from "../../Image/user.png";
+import github from "../../Image/github.png";
 import Overlay from "../Overlay/Overlay";
 import uniqid from "uniqid";
 

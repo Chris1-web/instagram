@@ -1,6 +1,6 @@
-import instragramAuthImage from "../../image/phone-instagram-screen.png";
-import checkmarkIcon from "../../image/checkmark-icon.png";
-import cancelIcon from "../../image/cancel-icon.png";
+import instragramAuthImage from "../../Image/phone-instagram-screen.png";
+import checkmarkIcon from "../../Image/checkmark-icon.png";
+import cancelIcon from "../../Image/cancel-icon.png";
 import Form from "../../components/Form/Form.js";
 import Button from "../../components/Button/Button.js";
 import { Link } from "react-router-dom";

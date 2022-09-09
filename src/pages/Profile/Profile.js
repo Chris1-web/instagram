@@ -6,11 +6,9 @@ import {
   AppsOutline,
   CheckmarkDoneOutline,
 } from "react-ionicons";
-import user from "../../image/user.png";
+import user from "../../Image/user.png";
 import "./Profile.css";
 import Loader from "../../components/Loader/Loader";
-import Comment from "../../image/comment.png";
-import Love from "../../image/love.png";
 
 // firebase
 import { auth, db } from "../../Firebase/Firebase-init";

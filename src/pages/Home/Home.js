@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./Home.css";
 
-import user from "../../image/user.png";
+import user from "../../Image/user.png";
 import Post from "../../components/Post/Post";
 
 // firestore

@@ -5,11 +5,11 @@ import user from "../../image/user.png";
 import "./PostDetail.css";
 import Form from "../../components/Form/Form";
 import Button from "../../components/Button/Button";
-import likeOutline from "../../image/like.png";
-import Love from "../../image/love.png";
-import Comment from "../../image/comment.png";
-import bookmarkOutline from "../../image/bookmark-outline.png";
-import bookmarkFill from "../../image/bookmark-fill.png";
+import likeOutline from "../../Image/like.png";
+import Love from "../../Image/love.png";
+import Comment from "../../Image/comment.png";
+import bookmarkOutline from "../../Image/bookmark-outline.png";
+import bookmarkFill from "../../Image/bookmark-fill.png";
 
 // firebase
 import { auth, db } from "../../Firebase/Firebase-init";

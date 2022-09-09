@@ -1,5 +1,5 @@
 import "./Loader.css";
-import instagramLoaderIcon from "../../image/instagram-loader.png";
+import instagramLoaderIcon from "../../Image/instagram-loader.png";
 
 function Loader() {
   return (

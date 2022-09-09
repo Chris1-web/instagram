@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Form from "../../components/Form/Form";
-import user from "../../image/user.png";
+import user from "../../Image/user.png";
 import Button from "../../components/Button/Button";
 import Loader from "../../components/Loader/Loader";
 import "./EditProfile.css";

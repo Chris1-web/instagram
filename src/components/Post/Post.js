@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import ProfileImage from "../ProfileImage/ProfileImage";
-import likeOutline from "../../image/like.png";
-import Love from "../../image/love.png";
-import Comment from "../../image/comment.png";
-import bookmarkOutline from "../../image/bookmark-outline.png";
-import bookmarkFill from "../../image/bookmark-fill.png";
+import likeOutline from "../../Image/like.png";
+import Love from "../../Image/love.png";
+import Comment from "../../Image/comment.png";
+import bookmarkOutline from "../../Image/bookmark-outline.png";
+import bookmarkFill from "../../Image/bookmark-fill.png";
 import Form from "../Form/Form";
 import Button from "../Button/Button";
 import "./Post.css";
