@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import EditProfile from "./pages/EditProfile/EditProfile";
 import Home from "./pages/Home/Home";
@@ -9,7 +9,7 @@ import PostDetail from "./pages/PostDetail/PostDetail";
 
 function RouteSwitch() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navbar />}>
           <Route index element={<Home />} />
@@ -20,7 +20,7 @@ function RouteSwitch() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
