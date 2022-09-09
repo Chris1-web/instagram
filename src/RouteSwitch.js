@@ -11,7 +11,7 @@ function RouteSwitch() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/instagram" element={<Navbar />}>
+        <Route path="/" element={<Navbar />}>
           <Route index element={<Home />} />
           <Route path=":displayName" element={<Profile />} />
           <Route path="accounts/edit" element={<EditProfile />} />
