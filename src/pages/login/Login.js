@@ -87,7 +87,7 @@ function Login() {
           <Form header="Instagram" handleSubmit={submitLoginDetails}>
             <div className="email-container">
               <label htmlFor="email" className={moveEmail ? "move" : ""}>
-                Username or Email address
+                Email address
               </label>
               <input
                 type="email"

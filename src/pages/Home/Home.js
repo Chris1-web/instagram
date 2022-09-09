@@ -15,6 +15,7 @@ import {
   where,
   onSnapshot,
   doc,
+  orderBy,
 } from "firebase/firestore";
 import { db, auth } from "../../Firebase/Firebase-init";
 
@@ -115,7 +116,10 @@ function Home() {
 
   useEffect(() => {
     async function getPosts() {
-      const allPosts = query(collection(db, "posts"));
+      const allPosts = query(
+        collection(db, "posts"),
+        orderBy("timestamp", "desc")
+      );
       onSnapshot(allPosts, (documents) => {
         const postDocs = [];
         documents.forEach((doc) => {

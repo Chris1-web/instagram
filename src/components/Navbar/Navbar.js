@@ -12,7 +12,6 @@ import Form from "../../components/Form/Form";
 import "./Navbar.css";
 import user from "../../image/user.png";
 import github from "../../image/github.png";
-import postUploadDone from "../../image/check-IG.png";
 import Overlay from "../Overlay/Overlay";
 import uniqid from "uniqid";
 
@@ -26,7 +25,7 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 function Navbar() {
   const { isOnline, loading } = useUserStatus(); //custom hook
@@ -81,6 +80,7 @@ function Navbar() {
         hideDropdown();
         setNewImage(null);
         deletePostImage();
+        setPostingLoading(false);
       } else {
         return;
       }
@@ -162,6 +162,7 @@ function Navbar() {
           createdDate.getMonth() + 1
         }/${createdDate.getFullYear()}`,
         postId: uniqid(),
+        timestamp: serverTimestamp(),
       });
       setPostingLoading(false);
       setNewImage(null);
@@ -337,8 +338,7 @@ function Navbar() {
                   <h3>Sharing</h3>
                 </div>
                 <div className="below">
-                  <img src={postUploadDone} alt="post upload is completed" />
-                  <p>Your post has been shared.</p>
+                  <p className="upload-done-loader"></p>
                 </div>
               </div>
             </Overlay>

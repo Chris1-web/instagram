@@ -151,7 +151,8 @@ function Profile() {
                   </div>
                   <div className="middle">
                     <p>
-                      <span>{showPost && profilePosts.length} </span>posts
+                      <span>{(profilePosts && profilePosts.length) || 0} </span>
+                      posts
                     </p>
                     <p>
                       <span>{profileInfo.followers.length} </span>followers
@@ -290,7 +291,7 @@ function Profile() {
                 </ul>
                 <ul className="posts">
                   {profilePosts?.map((post) => (
-                    <Link to={"post/" + post.postId} key={post.postId}>
+                    <Link to={"/post/" + post.postId} key={post.postId}>
                       <img src={post.postImage} alt={post.poster} />
                     </Link>
                   ))}

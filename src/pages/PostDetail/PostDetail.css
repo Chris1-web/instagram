@@ -19,6 +19,7 @@ div.post-details-containers img {
 
 div.post-details-containers img.postImage {
   background-color: var(--color-black);
+  width: 50%;
 }
 
 div.post-details-containers .comments {

@@ -8,7 +8,14 @@ import "./EditProfile.css";
 // firebase
 import { auth, storage, db } from "../../Firebase/Firebase-init";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { updateDoc, doc } from "firebase/firestore";
+import {
+  updateDoc,
+  doc,
+  query,
+  collection,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import useProfileInfo from "../../Hooks/useProfileInfo";
 
@@ -71,11 +78,35 @@ function EditProfile() {
         photoURL: publicImageUrl,
       });
       showProfileUpdateDiv("Profile photo updated.");
+      // update all the users post profile image
+      updateUserPostImages(publicImageUrl);
       // hide loader on image
       showLoader();
       // CONTINUE HERE
     } catch (error) {
       showProfileUpdateDiv("There has been a problem. Please, try again!");
+    }
+  }
+
+  async function updateUserPostImages(imageUrl) {
+    let allPostsId = [];
+    try {
+      const userPosts = query(
+        collection(db, "posts"),
+        where("poster", "==", username)
+      );
+      // posterProfileURL
+      const querySnapshot = await getDocs(userPosts);
+      querySnapshot.forEach((doc) => {
+        allPostsId.push(doc.id);
+      });
+      for (const id of allPostsId) {
+        await updateDoc(doc(db, "posts", id), {
+          posterProfileURL: imageUrl,
+        });
+      }
+    } catch (error) {
+      console.log(error.message);
     }
   }
 
