@@ -114,15 +114,15 @@ nav button.add-post-button {
 
 /* add a new post container */
 div.add-new-post {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  z-index: 2;
 }
 
 div.background-overlay {
-  position: fixed;
   background-color: var(--color-light-grey);
   width: 100%;
   height: 100%;

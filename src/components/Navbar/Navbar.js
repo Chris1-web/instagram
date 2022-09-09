@@ -25,7 +25,16 @@ import {
   getDownloadURL,
   deleteObject,
 } from "firebase/storage";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  query,
+  getDocs,
+  doc,
+  where,
+  deleteDoc,
+} from "firebase/firestore";
 
 function Navbar() {
   const { isOnline, loading } = useUserStatus(); //custom hook
@@ -97,6 +106,18 @@ function Navbar() {
       const imageReference = ref(storage, newImageRef);
       await deleteObject(imageReference);
       setNewImageRef(null);
+      // delete its post in database
+      let id;
+      const selectedPost = query(
+        collection(db, "posts"),
+        where("postImage", "==", newImage)
+      );
+      const postSnapshot = await getDocs(selectedPost);
+      postSnapshot.forEach((doc) => {
+        id = doc.id;
+      });
+      const postReference = doc(db, "posts", id);
+      await deleteDoc(postReference);
     } catch (e) {
       console.log(e.message);
     }
