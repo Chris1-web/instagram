@@ -21,6 +21,7 @@ function useUserStatus() {
         }
       });
     };
+    getUser();
     return () => getUser();
   }, []);
   return { isOnline, loading };
