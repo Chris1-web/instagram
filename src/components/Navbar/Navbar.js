@@ -248,7 +248,7 @@ function Navbar() {
                 />
                 <ul className="dropdown hide">
                   <li onClick={toggleDropdown}>
-                    <Link to={currentUser.displayName}>
+                    <Link to={"/" + currentUser.displayName}>
                       <img
                         src={currentUser.photoURL ?? user}
                         alt={currentUser.displayName}

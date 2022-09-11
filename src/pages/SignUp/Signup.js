@@ -332,6 +332,7 @@ function Signup() {
             <footer>
               Have an account? <Link to="/login">Log in</Link>
             </footer>
+            <p className="info">Note: You can sign up with a fake email</p>
             <p className="error-message"></p>
           </Form>
         </article>

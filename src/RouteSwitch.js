@@ -9,7 +9,7 @@ import PostDetail from "./pages/PostDetail/PostDetail";
 
 function RouteSwitch() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/instagram">
       <Routes>
         <Route path="/" element={<Navbar />}>
           <Route index element={<Home />} />

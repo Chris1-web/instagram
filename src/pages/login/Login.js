@@ -116,6 +116,7 @@ function Login() {
             <footer>
               Don't have an account? <Link to="/signup">Sign Up</Link>
             </footer>
+            <p className="info">Note: You can sign up with a fake email</p>
             <p className="error-message"></p>
           </Form>
         </article>
