@@ -235,7 +235,6 @@ function Profile() {
                 <div className="right">
                   <div className="top">
                     <h3>{profileInfo.username}</h3>
-                    <button className="message">Message</button>
                     {!showFollow ? (
                       <button
                         className="follow-btn"
@@ -261,7 +260,7 @@ function Profile() {
                   <div className="middle">
                     <p>
                       <span>
-                        {(showPost && profilePosts && profilePosts.length) || 0}
+                        {(showPost && profilePosts && profilePosts.length) || 0}{" "}
                       </span>
                       posts
                     </p>
