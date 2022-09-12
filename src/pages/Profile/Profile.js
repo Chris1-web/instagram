@@ -260,7 +260,10 @@ function Profile() {
                   </div>
                   <div className="middle">
                     <p>
-                      <span>{showPost && profilePosts.length} </span>posts
+                      <span>
+                        {(showPost && profilePosts && profilePosts.length) || 0}
+                      </span>
+                      posts
                     </p>
                     <p>
                       <span>{profileInfo.followers.length} </span>followers
