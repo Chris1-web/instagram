@@ -1,11 +1,8 @@
-article {
+article.login-article {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 4rem;
-}
-
-article {
   height: 100vh;
   background-color: var(--color-grey);
 }

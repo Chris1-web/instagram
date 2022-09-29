@@ -1,5 +1,5 @@
 @media (max-width: 990px) {
-  article {
+  article.signup-article {
     justify-content: space-around;
     padding: 0 5rem;
   }

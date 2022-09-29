@@ -3,8 +3,9 @@ nav {
   justify-content: space-between;
   align-items: center;
   height: 8vh;
-  padding: 1rem 17rem;
+  padding: 1rem 7rem;
   border-bottom: 0.2rem solid var(--color-dark-grey);
+  max-width: 100%;
   /* sticky nav bar */
   position: sticky;
   top: 0;
