@@ -5,6 +5,7 @@ import Form from "../../components/Form/Form.js";
 import Button from "../../components/Button/Button.js";
 import { Link } from "react-router-dom";
 import "./Signup.css";
+import "./SignupQuery.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 

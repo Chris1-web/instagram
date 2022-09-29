@@ -4,6 +4,7 @@ import Button from "../../components/Button/Button.js";
 import Form from "../../components/Form/Form.js";
 import instragramAuthImage from "../../Image/phone-instagram-screen.png";
 import "./Login.css";
+import "./LoginQuery.css";
 
 // firebase
 import { signInWithEmailAndPassword } from "firebase/auth";

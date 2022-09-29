@@ -1,0 +1,40 @@
+@media (max-width: 990px) {
+  article {
+    justify-content: space-around;
+    padding: 0 5rem;
+  }
+  .signup-article form {
+    width: 35vw;
+  }
+}
+
+@media (max-width: 820px) {
+  article.signup-article img {
+    display: none;
+  }
+  .show-password {
+    left: 82%;
+  }
+  .signup-article form {
+    width: 50vw;
+  }
+}
+
+@media (max-width: 670px) {
+  .signup-article form {
+    width: 100vw;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+  }
+  .signup-article form h1 {
+    font-size: 5rem;
+    padding: 2rem 0;
+  }
+  .signup-article form legend {
+    font-size: 2rem;
+  }
+  .signup-article footer {
+    font-size: 1.7rem;
+  }
+}
