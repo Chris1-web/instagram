@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import Overlay from "../../components/Overlay/Overlay";
 import user from "../../Image/user.png";
 import "./PostDetail.css";
+import "./PostDetailQuery.css";
 import Form from "../../components/Form/Form";
 import Button from "../../components/Button/Button";
 import likeOutline from "../../Image/like.png";

@@ -1,0 +1,8 @@
+@media (max-width: 913px) {
+  div.post-details-containers img.postImage {
+    display: none;
+  }
+  div.post-details-containers {
+    height: 80%;
+  }
+}

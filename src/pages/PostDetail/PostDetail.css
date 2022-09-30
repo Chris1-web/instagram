@@ -27,6 +27,7 @@ div.post-details-containers .comments {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: scroll;
 }
 
 div.post-details-containers .top,
