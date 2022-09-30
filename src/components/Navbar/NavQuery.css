@@ -1,5 +1,13 @@
-@media (max-width: 900px) {
+@media (max-width: 913px) {
   nav {
     padding: 1rem 2rem;
+  }
+  div.add-new-post-container,
+  div.add-new-post-loading-container {
+    width: 85%;
+    height: 60%;
+  }
+  button.close-modal-btn {
+    left: 90%;
   }
 }
