@@ -4,6 +4,7 @@ import user from "../../Image/user.png";
 import Button from "../../components/Button/Button";
 import Loader from "../../components/Loader/Loader";
 import "./EditProfile.css";
+import "./EditProfileQuery.css";
 
 // firebase
 import { auth, storage, db } from "../../Firebase/Firebase-init";

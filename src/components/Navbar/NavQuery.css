@@ -10,4 +10,16 @@
   button.close-modal-btn {
     left: 90%;
   }
+  p.upload-done-loader {
+    left: 85;
+  }
+  div.below-image img.postedImage {
+    display: none;
+  }
+  div.right-side {
+    width: 100%;
+  }
+  div.below-image textarea {
+    height: 70%;
+  }
 }

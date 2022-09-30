@@ -230,6 +230,10 @@ div.post-upload-complete {
   display: flex;
 }
 
+div.below-image {
+  height: 100%;
+}
+
 div.post-upload-complete {
   flex-direction: column;
   align-items: center;
@@ -242,6 +246,10 @@ div.below-image img.postedImage {
   width: 50rem;
   height: 46rem;
   border-bottom-left-radius: 1.9rem;
+}
+
+div.below-image img.postedImage {
+  width: 50%;
 }
 
 div.below-image img.postProfileImage {

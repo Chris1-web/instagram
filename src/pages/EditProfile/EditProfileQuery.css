@@ -1,0 +1,14 @@
+@media (max-width: 913px) {
+  .edit-profile-screen {
+    padding: 2rem 0;
+  }
+  .edit-profile-screen form {
+    padding: 3rem 2rem;
+  }
+  .edit-profile-screen form label {
+    font-size: 1.8rem;
+  }
+  div.add-new-post-container .below .loader {
+    top: 80%;
+  }
+}
