@@ -8,6 +8,7 @@ import {
 } from "react-ionicons";
 import user from "../../Image/user.png";
 import "./Profile.css";
+import "./ProfileQuery.css";
 import Loader from "../../components/Loader/Loader";
 
 // firebase
